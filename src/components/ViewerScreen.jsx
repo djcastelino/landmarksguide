@@ -65,26 +65,57 @@ export default function ViewerScreen({ data, onReset }) {
     }
   }, [data]);
 
-  // TTS Audio Functions with Google Cloud TTS
-  const handlePlayAudio = () => {
-    // Check if we have Google TTS audio
-    console.log('Audio playback - has audioContent:', !!data.audioContent);
-    if (data.audioContent) {
-      console.log('Using Google Cloud TTS audio');
-      // Use Google Cloud TTS audio
-      if (isPaused && utteranceRef.current) {
-        utteranceRef.current.play();
-        setIsPaused(false);
-        setIsPlaying(true);
-      } else {
-        // Stop any existing audio
-        if (utteranceRef.current) {
-          utteranceRef.current.pause();
-          utteranceRef.current.currentTime = 0;
+  // TTS Audio Functions with On-Demand Google Cloud TTS
+  const handlePlayAudio = async () => {
+    // Resume if paused
+    if (isPaused && utteranceRef.current) {
+      utteranceRef.current.play();
+      setIsPaused(false);
+      setIsPlaying(true);
+      return;
+    }
+
+    // If we already have cached audio, play it
+    if (data.audioContent && utteranceRef.current) {
+      utteranceRef.current.currentTime = 0;
+      utteranceRef.current.play();
+      return;
+    }
+
+    // Generate Google TTS on-demand
+    try {
+      console.log('Generating Google TTS audio on-demand...');
+      setIsPlaying(true); // Show loading state
+      
+      const response = await fetch(
+        `https://texttospeech.googleapis.com/v1/text:synthesize?key=AIzaSyDLcDOKopyll9ByGplOcQ6sEUx3CYbLphU`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            input: { text: data.narration },
+            voice: {
+              languageCode: 'en-US',
+              name: 'en-US-Wavenet-D',
+              ssmlGender: 'MALE'
+            },
+            audioConfig: {
+              audioEncoding: 'MP3',
+              speakingRate: 0.85,
+              pitch: 0
+            }
+          })
         }
+      );
+
+      const ttsData = await response.json();
+      
+      if (ttsData.audioContent) {
+        // Cache it for future plays
+        data.audioContent = ttsData.audioContent;
         
-        // Decode base64 audio and play
-        const audioData = atob(data.audioContent);
+        // Decode and play
+        const audioData = atob(ttsData.audioContent);
         const arrayBuffer = new Uint8Array(audioData.length);
         for (let i = 0; i < audioData.length; i++) {
           arrayBuffer[i] = audioData.charCodeAt(i);
@@ -107,34 +138,12 @@ export default function ViewerScreen({ data, onReset }) {
         
         utteranceRef.current = audio;
         audio.play();
+        console.log('Google TTS audio playing');
       }
-    } else {
-      // Fallback to browser TTS
-      if (isPaused) {
-        window.speechSynthesis.resume();
-        setIsPaused(false);
-        setIsPlaying(true);
-      } else {
-        window.speechSynthesis.cancel();
-        
-        const utterance = new SpeechSynthesisUtterance(data.narration);
-        utterance.rate = 0.85;
-        utterance.pitch = 1.0;
-        utterance.volume = 1.0;
-        
-        utterance.onstart = () => setIsPlaying(true);
-        utterance.onend = () => {
-          setIsPlaying(false);
-          setIsPaused(false);
-        };
-        utterance.onerror = () => {
-          setIsPlaying(false);
-          setIsPaused(false);
-        };
-        
-        utteranceRef.current = utterance;
-        window.speechSynthesis.speak(utterance);
-      }
+    } catch (error) {
+      console.error('TTS generation error:', error);
+      setIsPlaying(false);
+      setIsPaused(false);
     }
   };
 
