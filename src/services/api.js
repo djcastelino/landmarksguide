@@ -2,9 +2,10 @@
 
 export const fetchWikipediaSummary = async (query) => {
   try {
-    // Search first to get correct title
+    // Search with preference for historic landmarks
+    const searchQuery = `${query} historic landmark monument`;
     const searchRes = await fetch(
-      `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&origin=*`
+      `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(searchQuery)}&format=json&origin=*`
     );
     
     if (!searchRes.ok) {
@@ -17,6 +18,8 @@ export const fetchWikipediaSummary = async (query) => {
     if (!searchData.query.search.length) return null;
     
     const pageTitle = searchData.query.search[0].title;
+    console.log('Wikipedia found:', pageTitle);
+    
     const summaryRes = await fetch(
       `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(pageTitle.replace(/ /g, '_'))}`
     );
@@ -33,6 +36,8 @@ export const fetchWikipediaSummary = async (query) => {
       wikiData.lat = wikiData.coordinates.lat;
       wikiData.lng = wikiData.coordinates.lon;
       console.log('Using Wikipedia coordinates:', wikiData.lat, wikiData.lng);
+    } else {
+      console.warn('No coordinates in Wikipedia data for:', pageTitle);
     }
     
     return wikiData;
