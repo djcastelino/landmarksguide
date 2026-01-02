@@ -68,7 +68,9 @@ export default function ViewerScreen({ data, onReset }) {
   // TTS Audio Functions with Google Cloud TTS
   const handlePlayAudio = () => {
     // Check if we have Google TTS audio
+    console.log('Audio playback - has audioContent:', !!data.audioContent);
     if (data.audioContent) {
+      console.log('Using Google Cloud TTS audio');
       // Use Google Cloud TTS audio
       if (isPaused && utteranceRef.current) {
         utteranceRef.current.play();
