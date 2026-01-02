@@ -64,14 +64,14 @@ export default function ViewerScreen({ data, onReset }) {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:items-start">
         {/* Left Column: Street View */}
-        <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 lg:h-full">
+        <div className="lg:col-span-2">
+          <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 sticky top-8">
             <div 
               ref={streetViewRef} 
-              className="w-full aspect-video lg:aspect-auto bg-gray-900 relative lg:h-[calc(100%-60px)]"
-              style={{ minHeight: '400px', height: '500px' }}
+              className="w-full aspect-video lg:aspect-[16/11] bg-gray-900 relative"
+              style={{ minHeight: '400px' }}
             >
               {!streetViewAvailable && (
                 <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900 text-white">
