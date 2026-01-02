@@ -118,8 +118,8 @@ export default function ViewerScreen({ data, onReset }) {
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column: Street View */}
-        <div className="lg:col-span-2 flex flex-col">
-          <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 flex-1 flex flex-col">
+        <div className="lg:col-span-2">
+          <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
             <div 
               ref={streetViewRef} 
               className="w-full h-[500px] lg:h-[850px] bg-gray-900 relative"
@@ -174,12 +174,12 @@ export default function ViewerScreen({ data, onReset }) {
               <Bot className="w-32 h-32" />
             </div>
             <div className="relative z-10 space-y-4">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <div className="flex items-center gap-2 bg-white/20 w-fit px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
                   <Bot className="w-3 h-3" />
                   AI Tour Guide
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
                   {!isPlaying && !isPaused && (
                     <button
                       onClick={handlePlayAudio}
