@@ -74,7 +74,7 @@ export const fetchWikipediaSummary = async (query) => {
   }
 };
 
-export const generateNarration = async (locationName, wikiContext, wikipediaPage) => {
+export const generateNarration = async (locationName, wikiContext, wikipediaPage, stationContext = null) => {
   try {
     // Add variety with different narrative styles
     const styles = [
@@ -87,19 +87,30 @@ export const generateNarration = async (locationName, wikiContext, wikipediaPage
     
     const randomStyle = styles[Math.floor(Math.random() * styles.length)];
     
-    // Call your n8n webhook instead of Google Gemini
+    // Build request body
+    const requestBody = {
+      pathId: 'user-search',
+      locationId: locationName.toLowerCase().replace(/\s+/g, '-'),
+      locationTitle: locationName,
+      locationDescription: wikiContext.substring(0, 200),
+      wikipediaPage: wikipediaPage || locationName.replace(/\s+/g, '_'),
+      narrativeStyle: randomStyle,
+      timestamp: Date.now()
+    };
+    
+    // Add station context if this is a tour stop
+    if (stationContext) {
+      requestBody.stationName = stationContext.stationName;
+      requestBody.stationDescription = stationContext.stationDescription;
+      requestBody.tourName = stationContext.tourName;
+      requestBody.isTourStop = true;
+    }
+    
+    // Call your n8n webhook
     const response = await fetch('https://workflowly.online/webhook/pathfinder-narration', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        pathId: 'user-search',
-        locationId: locationName.toLowerCase().replace(/\s+/g, '-'),
-        locationTitle: locationName,
-        locationDescription: wikiContext.substring(0, 200),
-        wikipediaPage: wikipediaPage || locationName.replace(/\s+/g, '_'),
-        narrativeStyle: randomStyle,
-        timestamp: Date.now() // Add timestamp to ensure uniqueness
-      })
+      body: JSON.stringify(requestBody)
     });
     
     const data = await response.json();

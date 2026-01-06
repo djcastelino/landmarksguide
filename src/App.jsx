@@ -15,7 +15,7 @@ function App() {
   const [currentStop, setCurrentStop] = useState(0);
 
   // Load location data without changing view
-  const loadLocationData = async (query) => {
+  const loadLocationData = async (query, stationContext = null) => {
     try {
       // 1. Wikipedia Summary (fetch first to get accurate coordinates)
       const wiki = await fetchWikipediaSummary(query);
@@ -45,8 +45,8 @@ function App() {
         console.log('Using geocoding as fallback');
       }
 
-      // 3. AI Narration from n8n
-      const narrationData = await generateNarration(name, wiki.extract, wiki.title);
+      // 3. AI Narration from n8n (pass station context if available)
+      const narrationData = await generateNarration(name, wiki.extract, wiki.title, stationContext);
 
       // 4. Return location data
       return {
@@ -99,7 +99,13 @@ function App() {
     
     try {
       const stop = tour.stops[stopIndex];
-      const locationData = await loadLocationData(stop.query);
+      // Pass station context to AI narration
+      const stationContext = {
+        stationName: stop.name,
+        stationDescription: stop.description,
+        tourName: tour.name
+      };
+      const locationData = await loadLocationData(stop.query, stationContext);
       if (locationData) {
         setLocationData(locationData);
       }
