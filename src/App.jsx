@@ -14,32 +14,14 @@ function App() {
   const [activeTour, setActiveTour] = useState(null);
   const [currentStop, setCurrentStop] = useState(0);
 
-  const handleSearch = async (query) => {
-    setIsLoading(true);
-    setError(null);
-    
-    // Check if this is a tour request
-    if (query.startsWith('tour:')) {
-      const tourId = query.replace('tour:', '');
-      const tour = GUIDED_TOURS.find(t => t.id === tourId);
-      if (tour) {
-        setActiveTour(tour);
-        setCurrentStop(0);
-        setCurrentView('tour');
-        setIsLoading(false);
-        // Load first stop
-        await loadTourStop(tour, 0);
-        return;
-      }
-    }
-    
+  // Load location data without changing view
+  const loadLocationData = async (query) => {
     try {
       // 1. Wikipedia Summary (fetch first to get accurate coordinates)
       const wiki = await fetchWikipediaSummary(query);
       if (!wiki) {
         setError("We couldn't find that location. Please try a different name.");
-        setIsLoading(false);
-        return;
+        return null;
       }
 
       // 2. Use Wikipedia coordinates if available, otherwise geocode
@@ -55,8 +37,7 @@ function App() {
         const geo = await geocodeLocation(query);
         if (!geo) {
           setError("We found information but couldn't locate it on the map.");
-          setIsLoading(false);
-          return;
+          return null;
         }
         lat = geo.lat;
         lng = geo.lng;
@@ -67,22 +48,51 @@ function App() {
       // 3. AI Narration from n8n
       const narrationData = await generateNarration(name, wiki.extract, wiki.title);
 
-      // 4. Set State
-      setLocationData({
+      // 4. Return location data
+      return {
         name,
         lat,
         lng,
         narration: narrationData.narration,
         audioContent: narrationData.audioContent,
         historicalContext: wiki
-      });
-      setCurrentView('viewer');
+      };
     } catch (err) {
       console.error(err);
       setError("An unexpected error occurred. Please try again.");
-    } finally {
-      setIsLoading(false);
+      return null;
     }
+  };
+
+  const handleSearch = async (query) => {
+    setIsLoading(true);
+    setError(null);
+    
+    // Check if this is a tour request
+    if (query.startsWith('tour:')) {
+      const tourId = query.replace('tour:', '');
+      const tour = GUIDED_TOURS.find(t => t.id === tourId);
+      if (tour) {
+        setActiveTour(tour);
+        setCurrentStop(0);
+        setCurrentView('tour');
+        // Load first stop
+        const locationData = await loadLocationData(tour.stops[0].query);
+        if (locationData) {
+          setLocationData(locationData);
+        }
+        setIsLoading(false);
+        return;
+      }
+    }
+    
+    // Regular location search
+    const locationData = await loadLocationData(query);
+    if (locationData) {
+      setLocationData(locationData);
+      setCurrentView('viewer');
+    }
+    setIsLoading(false);
   };
 
   const loadTourStop = async (tour, stopIndex) => {
@@ -93,7 +103,10 @@ function App() {
     
     try {
       const stop = tour.stops[stopIndex];
-      await handleSearch(stop.query);
+      const locationData = await loadLocationData(stop.query);
+      if (locationData) {
+        setLocationData(locationData);
+      }
     } catch (err) {
       console.error('Tour stop load error:', err);
     } finally {
