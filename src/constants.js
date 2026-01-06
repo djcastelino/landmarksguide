@@ -24,11 +24,11 @@ export const GUIDED_TOURS = [
       { name: 'Station VII', query: 'Via Dolorosa', description: 'Jesus falls for the second time', landmark: 'Chapel at junction of Via Dolorosa and Souk Khan ez-Zeit', coords: { lat: 31.77819, lng: 35.23092 } },
       { name: 'Station VIII', query: 'Via Dolorosa', description: 'Jesus meets and consoles the women of Jerusalem', landmark: 'Greek Orthodox Monastery with Latin cross on wall', coords: { lat: 31.77793, lng: 35.23050 } },
       { name: 'Station IX', query: 'Via Dolorosa', description: 'Jesus falls for the third and final time', landmark: 'Entrance to Coptic Patriarchate on roof of Church of the Holy Sepulchre', coords: { lat: 31.77842, lng: 35.22970 } },
-      { name: 'Station X', query: 'Church of the Holy Sepulchre', description: 'Jesus is stripped of his garments at Calvary', landmark: 'Chapel inside Church of the Holy Sepulchre', coords: { lat: 31.7784, lng: 35.2294 } },
-      { name: 'Station XI', query: 'Church of the Holy Sepulchre', description: 'Jesus is nailed to the cross', landmark: 'Latin altar on Calvary, Church of the Holy Sepulchre', coords: { lat: 31.7784, lng: 35.2294 } },
-      { name: 'Station XII', query: 'Church of the Holy Sepulchre', description: 'Jesus dies on the cross', landmark: 'Greek Orthodox altar on Calvary, Church of the Holy Sepulchre', coords: { lat: 31.7784, lng: 35.2294 } },
-      { name: 'Station XIII', query: 'Church of the Holy Sepulchre', description: 'Jesus is taken down from the cross', landmark: 'Stone of Anointing, Church of the Holy Sepulchre', coords: { lat: 31.7785, lng: 35.2293 } },
-      { name: 'Station XIV', query: 'Church of the Holy Sepulchre', description: 'Jesus is laid in the tomb', landmark: 'The Holy Sepulchre (Aedicule), Church of the Holy Sepulchre', coords: { lat: 31.7786, lng: 35.2292 } }
+      { name: 'Station X', query: 'Church of the Holy Sepulchre', description: 'Jesus is stripped of his garments at Calvary', landmark: 'Chapel inside Church of the Holy Sepulchre', coords: { lat: 31.77844, lng: 35.22957 } },
+      { name: 'Station XI', query: 'Church of the Holy Sepulchre', description: 'Jesus is nailed to the cross', landmark: 'Latin altar on Calvary, Church of the Holy Sepulchre', coords: { lat: 31.77844, lng: 35.22957 } },
+      { name: 'Station XII', query: 'Church of the Holy Sepulchre', description: 'Jesus dies on the cross', landmark: 'Greek Orthodox altar on Calvary, Church of the Holy Sepulchre', coords: { lat: 31.77844, lng: 35.22957 } },
+      { name: 'Station XIII', query: 'Church of the Holy Sepulchre', description: 'Jesus is taken down from the cross', landmark: 'Stone of Anointing, Church of the Holy Sepulchre', coords: { lat: 31.77844, lng: 35.22957 } },
+      { name: 'Station XIV', query: 'Church of the Holy Sepulchre', description: 'Jesus is laid in the tomb', landmark: 'The Holy Sepulchre (Aedicule), Church of the Holy Sepulchre', coords: { lat: 31.77844, lng: 35.22957 } }
     ]
   }
 ];
