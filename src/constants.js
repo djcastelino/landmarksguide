@@ -15,20 +15,20 @@ export const GUIDED_TOURS = [
     duration: '14 stops',
     category: 'Sacred',
     stops: [
-      { name: 'First Station', query: 'Church of the Flagellation, Jerusalem', description: 'Jesus is condemned to death' },
-      { name: 'Second Station', query: 'Church of the Flagellation, Jerusalem', description: 'Jesus takes up his cross' },
-      { name: 'Third Station', query: 'Armenian Catholic Patriarchate, Old City, Jerusalem', description: 'Jesus falls for the first time' },
-      { name: 'Fourth Station', query: 'Our Lady of the Spasm, Via Dolorosa, Jerusalem', description: 'Jesus meets his mother Mary' },
-      { name: 'Fifth Station', query: 'Via Dolorosa', description: 'Simon of Cyrene helps Jesus carry the cross' },
-      { name: 'Sixth Station', query: 'Church of the Holy Face, Via Dolorosa, Jerusalem', description: 'Veronica wipes the face of Jesus' },
-      { name: 'Seventh Station', query: 'Via Dolorosa', description: 'Jesus falls for the second time' },
-      { name: 'Eighth Station', query: 'Greek Orthodox Monastery of Saint Charalambos, Jerusalem', description: 'Jesus meets the women of Jerusalem' },
-      { name: 'Ninth Station', query: 'Coptic Orthodox Patriarchate, Jerusalem', description: 'Jesus falls for the third time' },
-      { name: 'Tenth Station', query: 'Church of the Holy Sepulchre', description: 'Jesus is stripped of his garments' },
-      { name: 'Eleventh Station', query: 'Church of the Holy Sepulchre', description: 'Jesus is nailed to the cross' },
-      { name: 'Twelfth Station', query: 'Church of the Holy Sepulchre', description: 'Jesus dies on the cross' },
-      { name: 'Thirteenth Station', query: 'Church of the Holy Sepulchre', description: 'Jesus is taken down from the cross' },
-      { name: 'Fourteenth Station', query: 'Church of the Holy Sepulchre', description: 'Jesus is laid in the tomb' }
+      { name: 'Station I', query: 'Via Dolorosa', description: 'Jesus is condemned to death by Pontius Pilate' },
+      { name: 'Station II', query: 'Via Dolorosa', description: 'Jesus receives the cross and takes it upon his shoulders' },
+      { name: 'Station III', query: 'Via Dolorosa', description: 'Jesus falls for the first time under the weight of the cross' },
+      { name: 'Station IV', query: 'Via Dolorosa', description: 'Jesus meets his mother Mary along the way' },
+      { name: 'Station V', query: 'Via Dolorosa', description: 'Simon of Cyrene is compelled to help Jesus carry the cross' },
+      { name: 'Station VI', query: 'Via Dolorosa', description: 'Veronica wipes the face of Jesus with her veil' },
+      { name: 'Station VII', query: 'Via Dolorosa', description: 'Jesus falls for the second time' },
+      { name: 'Station VIII', query: 'Via Dolorosa', description: 'Jesus meets and consoles the women of Jerusalem' },
+      { name: 'Station IX', query: 'Via Dolorosa', description: 'Jesus falls for the third and final time' },
+      { name: 'Station X', query: 'Church of the Holy Sepulchre', description: 'Jesus is stripped of his garments at Calvary' },
+      { name: 'Station XI', query: 'Church of the Holy Sepulchre', description: 'Jesus is nailed to the cross' },
+      { name: 'Station XII', query: 'Church of the Holy Sepulchre', description: 'Jesus dies on the cross' },
+      { name: 'Station XIII', query: 'Church of the Holy Sepulchre', description: 'Jesus is taken down from the cross' },
+      { name: 'Station XIV', query: 'Church of the Holy Sepulchre', description: 'Jesus is laid in the tomb' }
     ]
   }
 ];
