@@ -106,6 +106,14 @@ function App() {
         tourName: tour.name
       };
       const locationData = await loadLocationData(stop.query, stationContext);
+      
+      // Override coordinates with station-specific coords if available
+      if (locationData && stop.coords) {
+        locationData.lat = stop.coords.lat;
+        locationData.lng = stop.coords.lng;
+        console.log(`Using hardcoded coords for ${stop.name}:`, stop.coords);
+      }
+      
       if (locationData) {
         setLocationData(locationData);
       }

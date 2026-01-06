@@ -15,20 +15,20 @@ export const GUIDED_TOURS = [
     duration: '14 stops',
     category: 'Sacred',
     stops: [
-      { name: 'Station I', query: 'Via Dolorosa', description: 'Jesus is condemned to death by Pontius Pilate' },
-      { name: 'Station II', query: 'Via Dolorosa', description: 'Jesus receives the cross and takes it upon his shoulders' },
-      { name: 'Station III', query: 'Via Dolorosa', description: 'Jesus falls for the first time under the weight of the cross' },
-      { name: 'Station IV', query: 'Via Dolorosa', description: 'Jesus meets his mother Mary along the way' },
-      { name: 'Station V', query: 'Via Dolorosa', description: 'Simon of Cyrene is compelled to help Jesus carry the cross' },
-      { name: 'Station VI', query: 'Via Dolorosa', description: 'Veronica wipes the face of Jesus with her veil' },
-      { name: 'Station VII', query: 'Via Dolorosa', description: 'Jesus falls for the second time' },
-      { name: 'Station VIII', query: 'Via Dolorosa', description: 'Jesus meets and consoles the women of Jerusalem' },
-      { name: 'Station IX', query: 'Via Dolorosa', description: 'Jesus falls for the third and final time' },
-      { name: 'Station X', query: 'Church of the Holy Sepulchre', description: 'Jesus is stripped of his garments at Calvary' },
-      { name: 'Station XI', query: 'Church of the Holy Sepulchre', description: 'Jesus is nailed to the cross' },
-      { name: 'Station XII', query: 'Church of the Holy Sepulchre', description: 'Jesus dies on the cross' },
-      { name: 'Station XIII', query: 'Church of the Holy Sepulchre', description: 'Jesus is taken down from the cross' },
-      { name: 'Station XIV', query: 'Church of the Holy Sepulchre', description: 'Jesus is laid in the tomb' }
+      { name: 'Station I', query: 'Via Dolorosa', description: 'Jesus is condemned to death by Pontius Pilate', coords: { lat: 31.7803, lng: 35.2354 } },
+      { name: 'Station II', query: 'Via Dolorosa', description: 'Jesus receives the cross and takes it upon his shoulders', coords: { lat: 31.7805, lng: 35.2356 } },
+      { name: 'Station III', query: 'Via Dolorosa', description: 'Jesus falls for the first time under the weight of the cross', coords: { lat: 31.7807, lng: 35.2359 } },
+      { name: 'Station IV', query: 'Via Dolorosa', description: 'Jesus meets his mother Mary along the way', coords: { lat: 31.7809, lng: 35.2362 } },
+      { name: 'Station V', query: 'Via Dolorosa', description: 'Simon of Cyrene is compelled to help Jesus carry the cross', coords: { lat: 31.7811, lng: 35.2365 } },
+      { name: 'Station VI', query: 'Via Dolorosa', description: 'Veronica wipes the face of Jesus with her veil', coords: { lat: 31.7813, lng: 35.2368 } },
+      { name: 'Station VII', query: 'Via Dolorosa', description: 'Jesus falls for the second time', coords: { lat: 31.7782, lng: 35.2309 } },
+      { name: 'Station VIII', query: 'Via Dolorosa', description: 'Jesus meets and consoles the women of Jerusalem', coords: { lat: 31.7779, lng: 35.2305 } },
+      { name: 'Station IX', query: 'Via Dolorosa', description: 'Jesus falls for the third and final time', coords: { lat: 31.7784, lng: 35.2297 } },
+      { name: 'Station X', query: 'Church of the Holy Sepulchre', description: 'Jesus is stripped of his garments at Calvary', coords: { lat: 31.7784, lng: 35.2294 } },
+      { name: 'Station XI', query: 'Church of the Holy Sepulchre', description: 'Jesus is nailed to the cross', coords: { lat: 31.7784, lng: 35.2294 } },
+      { name: 'Station XII', query: 'Church of the Holy Sepulchre', description: 'Jesus dies on the cross', coords: { lat: 31.7784, lng: 35.2294 } },
+      { name: 'Station XIII', query: 'Church of the Holy Sepulchre', description: 'Jesus is taken down from the cross', coords: { lat: 31.7785, lng: 35.2293 } },
+      { name: 'Station XIV', query: 'Church of the Holy Sepulchre', description: 'Jesus is laid in the tomb', coords: { lat: 31.7786, lng: 35.2292 } }
     ]
   }
 ];
