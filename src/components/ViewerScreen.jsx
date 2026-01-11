@@ -7,6 +7,35 @@ export default function ViewerScreen({ data, onReset }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const utteranceRef = useRef(null);
+  const backgroundMusicRef = useRef(null);
+  const audioContextRef = useRef(null);
+  const [musicReady, setMusicReady] = useState(false);
+
+  // Preload background music on component mount
+  useEffect(() => {
+    const music = new Audio('https://assets.mixkit.co/music/preview/mixkit-dreaming-big-31.mp3');
+    music.loop = true;
+    music.volume = 0.1;
+    music.preload = 'auto';
+    
+    music.addEventListener('canplaythrough', () => {
+      console.log('✅ Background music ready');
+      setMusicReady(true);
+    });
+    
+    music.addEventListener('error', (e) => {
+      console.error('❌ Background music error:', e);
+    });
+    
+    backgroundMusicRef.current = music;
+    
+    return () => {
+      if (music) {
+        music.pause();
+        music.src = '';
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const loadStreetView = () => {
@@ -87,13 +116,15 @@ export default function ViewerScreen({ data, onReset }) {
       console.log('Generating Google TTS audio on-demand...');
       setIsPlaying(true); // Show loading state
       
-      // Randomly select voice for variety
+      // Randomly select voice for variety - Using Neural2 for more natural sound
       const voices = [
-        { name: 'en-US-Wavenet-D', gender: 'MALE' },
-        { name: 'en-US-Wavenet-J', gender: 'MALE' },
-        { name: 'en-US-Wavenet-F', gender: 'FEMALE' },
-        { name: 'en-US-Wavenet-H', gender: 'FEMALE' },
-        { name: 'en-GB-Wavenet-B', gender: 'MALE' } // British male
+        { name: 'en-US-Neural2-D', gender: 'MALE' },      // Natural male
+        { name: 'en-US-Neural2-J', gender: 'MALE' },      // Warm male
+        { name: 'en-US-Neural2-F', gender: 'FEMALE' },    // Clear, natural female
+        { name: 'en-US-Neural2-H', gender: 'FEMALE' },    // Expressive female
+        { name: 'en-US-Neural2-C', gender: 'FEMALE' },    // Professional female
+        { name: 'en-GB-Neural2-B', gender: 'MALE' },      // British male
+        { name: 'en-GB-Neural2-F', gender: 'FEMALE' }     // British female
       ];
       const selectedVoice = voices[Math.floor(Math.random() * voices.length)];
       console.log('Selected voice:', selectedVoice.name, selectedVoice.gender);
@@ -134,22 +165,46 @@ export default function ViewerScreen({ data, onReset }) {
         const blob = new Blob([arrayBuffer], { type: 'audio/mp3' });
         const audioUrl = URL.createObjectURL(blob);
         
+        // Create narration audio element
         const audio = new Audio(audioUrl);
-        audio.onplay = () => setIsPlaying(true);
+        
+        audio.onplay = async () => {
+          setIsPlaying(true);
+          // Start background music when narration starts
+          if (backgroundMusicRef.current && musicReady) {
+            try {
+              backgroundMusicRef.current.currentTime = 0;
+              await backgroundMusicRef.current.play();
+              console.log('🎵 Background music playing at 10% volume');
+            } catch (err) {
+              console.warn('⚠️ Background music blocked by browser:', err.message);
+            }
+          }
+        };
+        
         audio.onended = () => {
           setIsPlaying(false);
           setIsPaused(false);
           URL.revokeObjectURL(audioUrl);
+          // Stop background music when narration ends
+          if (backgroundMusicRef.current) {
+            backgroundMusicRef.current.pause();
+            backgroundMusicRef.current.currentTime = 0;
+          }
         };
+        
         audio.onerror = () => {
           setIsPlaying(false);
           setIsPaused(false);
           console.error('Audio playback error');
+          if (backgroundMusicRef.current) {
+            backgroundMusicRef.current.pause();
+          }
         };
         
         utteranceRef.current = audio;
         audio.play();
-        console.log('Google TTS audio playing');
+        console.log('Google TTS audio playing with background music at 10%');
       }
     } catch (error) {
       console.error('TTS generation error:', error);
@@ -164,6 +219,10 @@ export default function ViewerScreen({ data, onReset }) {
     } else {
       window.speechSynthesis.pause();
     }
+    // Pause background music too
+    if (backgroundMusicRef.current) {
+      backgroundMusicRef.current.pause();
+    }
     setIsPaused(true);
     setIsPlaying(false);
   };
@@ -174,6 +233,11 @@ export default function ViewerScreen({ data, onReset }) {
       utteranceRef.current.currentTime = 0;
     } else {
       window.speechSynthesis.cancel();
+    }
+    // Stop background music
+    if (backgroundMusicRef.current) {
+      backgroundMusicRef.current.pause();
+      backgroundMusicRef.current.currentTime = 0;
     }
     setIsPlaying(false);
     setIsPaused(false);
@@ -186,6 +250,15 @@ export default function ViewerScreen({ data, onReset }) {
         utteranceRef.current.pause();
       } else {
         window.speechSynthesis.cancel();
+      }
+      // Cleanup background music
+      if (backgroundMusicRef.current) {
+        backgroundMusicRef.current.pause();
+        backgroundMusicRef.current.currentTime = 0;
+      }
+      // Cleanup audio context
+      if (audioContextRef.current) {
+        audioContextRef.current.close();
       }
     };
   }, [data.audioContent]);

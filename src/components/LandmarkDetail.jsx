@@ -1,0 +1,282 @@
+import { useState, useRef, useEffect } from 'react';
+
+function LandmarkDetail({ landmark, narration, audioContent, onBack }) {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const audioRef = useRef(null);
+  const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
+
+  const handlePlayAudio = async () => {
+    if (isPaused && audioRef.current) {
+      audioRef.current.play();
+      setIsPaused(false);
+      setIsPlaying(true);
+      return;
+    }
+
+    if (audioRef.current && !isPaused) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play();
+      return;
+    }
+
+    setIsGeneratingAudio(true);
+    try {
+      const voices = [
+        { name: 'en-US-Wavenet-D', gender: 'MALE' },
+        { name: 'en-US-Wavenet-J', gender: 'MALE' },
+        { name: 'en-US-Wavenet-F', gender: 'FEMALE' },
+        { name: 'en-US-Wavenet-H', gender: 'FEMALE' },
+        { name: 'en-GB-Wavenet-B', gender: 'MALE' }
+      ];
+      const selectedVoice = voices[Math.floor(Math.random() * voices.length)];
+      
+      const response = await fetch(
+        `https://texttospeech.googleapis.com/v1/text:synthesize?key=AIzaSyDLcDOKopyll9ByGplOcQ6sEUx3CYbLphU`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            input: { text: narration },
+            voice: {
+              languageCode: selectedVoice.name.startsWith('en-GB') ? 'en-GB' : 'en-US',
+              name: selectedVoice.name,
+              ssmlGender: selectedVoice.gender
+            },
+            audioConfig: {
+              audioEncoding: 'MP3',
+              speakingRate: 0.85,
+              pitch: 0
+            }
+          })
+        }
+      );
+
+      const ttsData = await response.json();
+      
+      if (ttsData.audioContent) {
+        const audioData = atob(ttsData.audioContent);
+        const arrayBuffer = new Uint8Array(audioData.length);
+        for (let i = 0; i < audioData.length; i++) {
+          arrayBuffer[i] = audioData.charCodeAt(i);
+        }
+        const blob = new Blob([arrayBuffer], { type: 'audio/mp3' });
+        const audioUrl = URL.createObjectURL(blob);
+        
+        const audio = new Audio(audioUrl);
+        audio.onloadedmetadata = () => setDuration(audio.duration);
+        audio.ontimeupdate = () => setCurrentTime(audio.currentTime);
+        audio.onplay = () => setIsPlaying(true);
+        audio.onended = () => {
+          setIsPlaying(false);
+          setIsPaused(false);
+          setCurrentTime(0);
+        };
+        audio.onerror = () => {
+          setIsPlaying(false);
+          setIsPaused(false);
+          console.error('Audio playback error');
+        };
+        
+        audioRef.current = audio;
+        audio.play();
+      }
+    } catch (error) {
+      console.error('TTS generation error:', error);
+      setIsPlaying(false);
+    } finally {
+      setIsGeneratingAudio(false);
+    }
+  };
+
+  const handlePauseAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+      setIsPaused(true);
+    }
+  };
+
+  const handleStopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      setIsPlaying(false);
+      setIsPaused(false);
+      setCurrentTime(0);
+    }
+  };
+
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  useEffect(() => {
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+      <div className="max-w-5xl mx-auto px-4 py-8">
+        <button
+          onClick={onBack}
+          className="mb-6 flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
+        >
+          <span className="text-xl">←</span>
+          <span className="font-medium">Back to landmarks</span>
+        </button>
+
+        <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
+          <div className="relative h-96 bg-gray-300">
+            <img
+              src={landmark.imageUrl}
+              alt={landmark.name}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+            <div className="absolute bottom-0 left-0 right-0 p-8">
+              <div className="mb-3">
+                <span className="px-4 py-2 bg-white/90 backdrop-blur-sm text-sm font-semibold rounded-full text-gray-800">
+                  {landmark.category}
+                </span>
+              </div>
+              <h1 className="text-5xl font-bold text-white mb-3 drop-shadow-lg">
+                {landmark.name}
+              </h1>
+              <p className="text-xl text-white/90 flex items-center gap-2">
+                <span>📍</span>
+                {landmark.city}, {landmark.country}
+              </p>
+            </div>
+          </div>
+
+          <div className="p-8">
+            <div className="grid grid-cols-3 gap-4 mb-8 pb-8 border-b border-gray-200">
+              <div>
+                <p className="text-sm text-gray-500 mb-1">Built/Formed</p>
+                <p className="text-lg font-semibold text-gray-900">{landmark.year}</p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-500 mb-1">Height/Size</p>
+                <p className="text-lg font-semibold text-gray-900">{landmark.height}</p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-500 mb-1">Location</p>
+                <p className="text-lg font-semibold text-gray-900">
+                  {landmark.coordinates.lat.toFixed(4)}°, {landmark.coordinates.lng.toFixed(4)}°
+                </p>
+              </div>
+            </div>
+
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">About</h2>
+              <p className="text-gray-700 text-lg leading-relaxed mb-4">
+                {landmark.description}
+              </p>
+              <p className="text-gray-600 leading-relaxed">
+                {landmark.significance}
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 mb-8">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="text-2xl">🎙️</span>
+                <h2 className="text-xl font-bold text-gray-900">AI Audio Guide</h2>
+              </div>
+              
+              <div className="bg-white rounded-xl p-6 mb-4">
+                <p className="text-gray-700 leading-relaxed max-h-48 overflow-y-auto">
+                  {narration}
+                </p>
+              </div>
+
+              <div className="flex items-center gap-4">
+                {!isPlaying && !isPaused ? (
+                  <button
+                    onClick={handlePlayAudio}
+                    disabled={isGeneratingAudio}
+                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-xl transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                  >
+                    {isGeneratingAudio ? (
+                      <>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                        Generating audio...
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-xl">▶️</span>
+                        Play Audio Guide
+                      </>
+                    )}
+                  </button>
+                ) : (
+                  <>
+                    <button
+                      onClick={isPlaying ? handlePauseAudio : handlePlayAudio}
+                      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-xl transition-colors flex items-center justify-center gap-2"
+                    >
+                      <span className="text-xl">{isPlaying ? '⏸️' : '▶️'}</span>
+                      {isPlaying ? 'Pause' : 'Resume'}
+                    </button>
+                    <button
+                      onClick={handleStopAudio}
+                      className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-4 px-6 rounded-xl transition-colors flex items-center justify-center gap-2"
+                    >
+                      <span className="text-xl">⏹️</span>
+                      Stop
+                    </button>
+                  </>
+                )}
+              </div>
+
+              {duration > 0 && (
+                <div className="mt-4">
+                  <div className="flex justify-between text-sm text-gray-600 mb-2">
+                    <span>{formatTime(currentTime)}</span>
+                    <span>{formatTime(duration)}</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div
+                      className="bg-blue-600 h-2 rounded-full transition-all"
+                      style={{ width: `${(currentTime / duration) * 100}%` }}
+                    ></div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="flex gap-4">
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${landmark.coordinates.lat},${landmark.coordinates.lng}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors text-center"
+              >
+                🗺️ View on Map
+              </a>
+              <a
+                href={`https://en.wikipedia.org/wiki/${encodeURIComponent(landmark.name.replace(/ /g, '_'))}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors text-center"
+              >
+                📖 Learn More
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default LandmarkDetail;

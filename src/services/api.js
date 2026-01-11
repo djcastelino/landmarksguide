@@ -2,6 +2,9 @@
 
 export const fetchWikipediaSummary = async (query) => {
   try {
+    // Initialize pageTitle with the original query
+    let pageTitle = query;
+    
     // Try exact match first
     let summaryRes = await fetch(
       `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query.replace(/ /g, '_'))}`
@@ -23,7 +26,7 @@ export const fetchWikipediaSummary = async (query) => {
       if (!searchData.query.search.length) return null;
       
       // Filter out disambiguation pages, court cases, and prefer actual places
-      let pageTitle = searchData.query.search[0].title;
+      pageTitle = searchData.query.search[0].title;
       for (const result of searchData.query.search) {
         const title = result.title.toLowerCase();
         const snippet = result.snippet.toLowerCase();
@@ -74,37 +77,51 @@ export const fetchWikipediaSummary = async (query) => {
   }
 };
 
-export const generateNarration = async (locationName, wikiContext, wikipediaPage, stationContext = null) => {
+export const generateNarration = async (locationName, wikiContext, wikipediaPage, landmarkContext = null) => {
   try {
-    // Add variety with different narrative styles
-    const styles = [
-      "Create a vivid, immersive first-person tour guide narration",
-      "Write an engaging historical storytelling narrative",
-      "Provide a dramatic, cinematic description",
-      "Share fascinating facts in an enthusiastic tour guide voice",
-      "Tell the story as if transporting visitors back in time"
-    ];
+    // Enhanced storytelling prompt for 2-3 minute narration
+    const enhancedPrompt = `You are an expert tour guide with deep knowledge of world history, architecture, and geography. Create an engaging, vivid audio narration (2-3 minutes when spoken) about ${locationName}.
+
+Your narration should:
+- Open with a captivating hook that draws listeners in
+- Paint a vivid picture of the landmark's physical presence and atmosphere
+- Share the fascinating historical backstory and key events
+- Explain its geographical and cultural significance
+- Include 2-3 fun facts, trivia, or "Did You Know?" moments that surprise and delight
+  * Examples: unusual construction methods, surprising measurements, hidden symbolism, famous visitors, movie appearances, quirky traditions, world records, engineering marvels
+- Use descriptive, sensory language that helps listeners visualize the scene
+- Maintain an enthusiastic, storytelling tone throughout
+- End with a memorable takeaway or reflection
+
+CRITICAL RULES:
+- Never use phrases like "this station", "this stop", or "this location". Always refer to the landmark by its actual name: "${locationName}".
+- DO NOT include any stage directions, sound effects, or music cues like "(music fades)", "(wind blowing)", etc.
+- Write ONLY the spoken narration text - no parenthetical directions or scene descriptions
+- This is pure audio narration, not a script with production notes
+
+Write in a natural, conversational style as if you're standing right there with the visitor, sharing your passion and knowledge. Make history come alive with fascinating trivia!`;
     
-    const randomStyle = styles[Math.floor(Math.random() * styles.length)];
-    
-    // Build request body
+    // Build comprehensive request body
     const requestBody = {
-      pathId: 'user-search',
+      pathId: 'monument-app',
       locationId: locationName.toLowerCase().replace(/\s+/g, '-'),
       locationTitle: locationName,
-      locationDescription: wikiContext.substring(0, 200),
+      enhancedPrompt: enhancedPrompt,
       wikipediaPage: wikipediaPage || locationName.replace(/\s+/g, '_'),
-      narrativeStyle: randomStyle,
       timestamp: Date.now()
     };
     
-    // Add station context if this is a tour stop
-    if (stationContext) {
-      requestBody.stationName = stationContext.stationName;
-      requestBody.stationDescription = stationContext.stationDescription;
-      requestBody.tourName = stationContext.tourName;
-      requestBody.currentLandmark = stationContext.currentLandmark;
-      requestBody.isTourStop = true;
+    // Add rich landmark context from curated JSON
+    if (landmarkContext) {
+      requestBody.landmarkName = locationName;
+      requestBody.description = landmarkContext.description;
+      requestBody.significance = landmarkContext.significance;
+      requestBody.year = landmarkContext.year;
+      requestBody.category = landmarkContext.category;
+      requestBody.country = landmarkContext.country;
+      requestBody.city = landmarkContext.city;
+      requestBody.height = landmarkContext.height;
+      requestBody.isLandmark = true;
     }
     
     // Call your n8n webhook

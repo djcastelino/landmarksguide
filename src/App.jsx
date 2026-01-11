@@ -1,153 +1,75 @@
 import { useState, useEffect } from 'react';
 import Header from './components/Header';
-import SearchScreen from './components/SearchScreen';
-import ViewerScreen from './components/ViewerScreen';
-import TourScreen from './components/TourScreen';
-import { geocodeLocation, fetchWikipediaSummary, generateNarration } from './services/api';
-import { GUIDED_TOURS } from './constants';
+import LandmarkGrid from './components/LandmarkGrid';
+import LandmarkDetail from './components/LandmarkDetail';
+import { fetchWikipediaSummary, generateNarration } from './services/api';
+import landmarksData from './data/landmarks.json';
 
 function App() {
-  const [currentView, setCurrentView] = useState('search');
+  const [currentView, setCurrentView] = useState('grid');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [locationData, setLocationData] = useState(null);
-  const [activeTour, setActiveTour] = useState(null);
-  const [currentStop, setCurrentStop] = useState(0);
+  const [selectedLandmark, setSelectedLandmark] = useState(null);
+  const [narrationData, setNarrationData] = useState(null);
 
-  // Load location data without changing view
-  const loadLocationData = async (query, stationContext = null) => {
-    try {
-      // 1. Wikipedia Summary (fetch first to get accurate coordinates)
-      const wiki = await fetchWikipediaSummary(query);
-      if (!wiki) {
-        setError("We couldn't find that location. Please try a different name.");
-        return null;
-      }
-
-      // 2. Use Wikipedia coordinates if available, otherwise geocode
-      let lat, lng, name;
-      if (wiki.lat && wiki.lng) {
-        // Wikipedia has coordinates - use them (more accurate for historic sites)
-        lat = wiki.lat;
-        lng = wiki.lng;
-        name = wiki.title;
-        console.log('Using Wikipedia coordinates for accuracy');
-      } else {
-        // Fallback to geocoding if Wikipedia doesn't have coordinates
-        const geo = await geocodeLocation(query);
-        if (!geo) {
-          setError("We found information but couldn't locate it on the map.");
-          return null;
-        }
-        lat = geo.lat;
-        lng = geo.lng;
-        name = geo.name;
-        console.log('Using geocoding as fallback');
-      }
-
-      // 3. AI Narration from n8n (pass station context if available)
-      const narrationData = await generateNarration(name, wiki.extract, wiki.title, stationContext);
-
-      // 4. Return location data
-      return {
-        name,
-        lat,
-        lng,
-        narration: narrationData.narration,
-        audioContent: narrationData.audioContent,
-        historicalContext: wiki
-      };
-    } catch (err) {
-      console.error(err);
-      setError("An unexpected error occurred. Please try again.");
-      return null;
-    }
-  };
-
-  const handleSearch = async (query) => {
+  const loadLandmarkNarration = async (landmark) => {
     setIsLoading(true);
     setError(null);
     
-    // Check if this is a tour request
-    if (query.startsWith('tour:')) {
-      const tourId = query.replace('tour:', '');
-      const tour = GUIDED_TOURS.find(t => t.id === tourId);
-      if (tour) {
-        setActiveTour(tour);
-        setCurrentStop(-1); // No station selected initially
-        setCurrentView('tour');
-        setLocationData(null); // Clear any previous location
-        setIsLoading(false);
-        return;
-      }
-    }
-    
-    // Regular location search
-    const locationData = await loadLocationData(query);
-    if (locationData) {
-      setLocationData(locationData);
-      setCurrentView('viewer');
-    }
-    setIsLoading(false);
-  };
-
-  const loadTourStop = async (tour, stopIndex) => {
-    if (stopIndex < 0 || stopIndex >= tour.stops.length) return;
-    
-    setIsLoading(true);
-    setCurrentStop(stopIndex);
-    
     try {
-      const stop = tour.stops[stopIndex];
-      // Pass station context to AI narration
-      const stationContext = {
-        stationName: stop.name,
-        stationDescription: stop.description,
-        tourName: tour.name,
-        currentLandmark: stop.landmark
+      const wiki = await fetchWikipediaSummary(landmark.name);
+      const wikiContext = wiki?.extract || landmark.description;
+      
+      const landmarkContext = {
+        landmarkName: landmark.name,
+        description: landmark.description,
+        significance: landmark.significance,
+        year: landmark.year,
+        category: landmark.category,
+        country: landmark.country
       };
-      const locationData = await loadLocationData(stop.query, stationContext);
       
-      // Override coordinates with station-specific coords if available
-      if (locationData && stop.coords) {
-        locationData.lat = stop.coords.lat;
-        locationData.lng = stop.coords.lng;
-        console.log(`Using hardcoded coords for ${stop.name}:`, stop.coords);
-      }
+      const narration = await generateNarration(
+        landmark.name,
+        wikiContext,
+        landmark.name.replace(/ /g, '_'),
+        landmarkContext
+      );
       
-      if (locationData) {
-        setLocationData(locationData);
-      }
+      setNarrationData(narration);
+      setCurrentView('detail');
     } catch (err) {
-      console.error('Tour stop load error:', err);
+      console.error('Failed to load narration:', err);
+      setError('Failed to load narration. Please try again.');
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleTourStopSelect = async (stopIndex) => {
-    if (!activeTour) return;
-    await loadTourStop(activeTour, stopIndex);
+  const handleLandmarkSelect = async (landmark) => {
+    setSelectedLandmark(landmark);
+    await loadLandmarkNarration(landmark);
   };
 
-  const resetToSearch = () => {
-    setCurrentView('search');
+  const handleBackToGrid = () => {
+    setCurrentView('grid');
+    setSelectedLandmark(null);
+    setNarrationData(null);
     setError(null);
-    setLocationData(null);
-    setActiveTour(null);
-    setCurrentStop(0);
   };
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 via-white to-green-50">
-      <Header 
-        showBack={currentView === 'viewer' || currentView === 'tour'} 
-        onBack={resetToSearch} 
-      />
+      {currentView === 'grid' && (
+        <Header 
+          showBack={false} 
+          onBack={handleBackToGrid} 
+        />
+      )}
       
       <main className="flex-1">
         {error && (
-          <div className="max-w-2xl mx-auto px-4 mt-6">
+          <div className="max-w-7xl mx-auto px-4 mt-6">
             <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl flex items-center gap-3">
               <span className="text-xl">⚠️</span>
               <p className="font-medium">{error}</p>
@@ -155,35 +77,24 @@ function App() {
           </div>
         )}
 
-        {currentView === 'search' ? (
-          <SearchScreen onSearch={handleSearch} isLoading={isLoading} />
-        ) : currentView === 'tour' && activeTour ? (
-          <>
-            <TourScreen 
-              tour={activeTour}
-              currentStop={currentStop}
-              onStopSelect={handleTourStopSelect}
-              onBack={resetToSearch}
-            />
-            {locationData && (
-              <ViewerScreen 
-                data={locationData} 
-                onReset={resetToSearch} 
-              />
-            )}
-          </>
-        ) : (
-          locationData && (
-            <ViewerScreen 
-              data={locationData} 
-              onReset={resetToSearch} 
-            />
-          )
-        )}
+        {currentView === 'grid' ? (
+          <LandmarkGrid 
+            landmarks={landmarksData.landmarks}
+            onLandmarkSelect={handleLandmarkSelect}
+            isLoading={isLoading}
+          />
+        ) : currentView === 'detail' && selectedLandmark && narrationData ? (
+          <LandmarkDetail
+            landmark={selectedLandmark}
+            narration={narrationData.narration}
+            audioContent={narrationData.audioContent}
+            onBack={handleBackToGrid}
+          />
+        ) : null}
       </main>
 
       <footer className="py-8 text-center text-gray-400 text-xs">
-        &copy; {new Date().getFullYear()} PathFinder AI Explorer. Powered by Google Maps & AI.
+        &copy; {new Date().getFullYear()} Monument AI. Discover the world's greatest landmarks.
       </footer>
     </div>
   );
