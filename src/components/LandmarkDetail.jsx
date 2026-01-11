@@ -6,7 +6,9 @@ function LandmarkDetail({ landmark, narration, audioContent, onBack }) {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const audioRef = useRef(null);
+  const backgroundMusicRef = useRef(null);
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
+  const [musicReady, setMusicReady] = useState(false);
 
   const handlePlayAudio = async () => {
     if (isPaused && audioRef.current) {
@@ -25,11 +27,12 @@ function LandmarkDetail({ landmark, narration, audioContent, onBack }) {
     setIsGeneratingAudio(true);
     try {
       const voices = [
-        { name: 'en-US-Wavenet-D', gender: 'MALE' },
-        { name: 'en-US-Wavenet-J', gender: 'MALE' },
-        { name: 'en-US-Wavenet-F', gender: 'FEMALE' },
-        { name: 'en-US-Wavenet-H', gender: 'FEMALE' },
-        { name: 'en-GB-Wavenet-B', gender: 'MALE' }
+        { name: 'en-US-Neural2-D', gender: 'MALE' },
+        { name: 'en-US-Neural2-J', gender: 'MALE' },
+        { name: 'en-US-Neural2-F', gender: 'FEMALE' },
+        { name: 'en-US-Neural2-H', gender: 'FEMALE' },
+        { name: 'en-US-Neural2-C', gender: 'FEMALE' },
+        { name: 'en-GB-Neural2-B', gender: 'MALE' }
       ];
       const selectedVoice = voices[Math.floor(Math.random() * voices.length)];
       
@@ -68,11 +71,25 @@ function LandmarkDetail({ landmark, narration, audioContent, onBack }) {
         const audio = new Audio(audioUrl);
         audio.onloadedmetadata = () => setDuration(audio.duration);
         audio.ontimeupdate = () => setCurrentTime(audio.currentTime);
-        audio.onplay = () => setIsPlaying(true);
+        audio.onplay = () => {
+          setIsPlaying(true);
+          // Start background music
+          if (backgroundMusicRef.current && musicReady) {
+            backgroundMusicRef.current.currentTime = 0;
+            backgroundMusicRef.current.play()
+              .then(() => console.log('🎵 Background music playing at 10%'))
+              .catch(err => console.warn('⚠️ Background music blocked:', err.message));
+          }
+        };
         audio.onended = () => {
           setIsPlaying(false);
           setIsPaused(false);
           setCurrentTime(0);
+          // Stop background music
+          if (backgroundMusicRef.current) {
+            backgroundMusicRef.current.pause();
+            backgroundMusicRef.current.currentTime = 0;
+          }
         };
         audio.onerror = () => {
           setIsPlaying(false);
@@ -97,6 +114,10 @@ function LandmarkDetail({ landmark, narration, audioContent, onBack }) {
       setIsPlaying(false);
       setIsPaused(true);
     }
+    // Pause background music
+    if (backgroundMusicRef.current) {
+      backgroundMusicRef.current.pause();
+    }
   };
 
   const handleStopAudio = () => {
@@ -107,6 +128,11 @@ function LandmarkDetail({ landmark, narration, audioContent, onBack }) {
       setIsPaused(false);
       setCurrentTime(0);
     }
+    // Stop background music
+    if (backgroundMusicRef.current) {
+      backgroundMusicRef.current.pause();
+      backgroundMusicRef.current.currentTime = 0;
+    }
   };
 
   const formatTime = (seconds) => {
@@ -115,11 +141,40 @@ function LandmarkDetail({ landmark, narration, audioContent, onBack }) {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
+  // Preload background music
+  useEffect(() => {
+    const music = new Audio('https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3');
+    music.loop = true;
+    music.volume = 0.1; // 10% volume
+    music.preload = 'auto';
+    
+    music.addEventListener('canplaythrough', () => {
+      console.log('✅ Background music ready');
+      setMusicReady(true);
+    });
+    
+    music.addEventListener('error', (e) => {
+      console.error('❌ Background music error:', e);
+    });
+    
+    backgroundMusicRef.current = music;
+    
+    return () => {
+      if (music) {
+        music.pause();
+        music.src = '';
+      }
+    };
+  }, []);
+
   useEffect(() => {
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current = null;
+      }
+      if (backgroundMusicRef.current) {
+        backgroundMusicRef.current.pause();
       }
     };
   }, []);
