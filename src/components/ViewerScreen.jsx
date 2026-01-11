@@ -13,10 +13,12 @@ export default function ViewerScreen({ data, onReset }) {
 
   // Preload background music on component mount
   useEffect(() => {
-    const music = new Audio('https://assets.mixkit.co/music/preview/mixkit-dreaming-big-31.mp3');
+    // Using a reliable, lightweight ambient track
+    const music = new Audio('https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3');
     music.loop = true;
     music.volume = 0.1;
     music.preload = 'auto';
+    music.crossOrigin = 'anonymous';
     
     music.addEventListener('canplaythrough', () => {
       console.log('✅ Background music ready');
