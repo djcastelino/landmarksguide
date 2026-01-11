@@ -27,12 +27,10 @@ function LandmarkDetail({ landmark, narration, audioContent, onBack }) {
     setIsGeneratingAudio(true);
     try {
       const voices = [
-        { name: 'en-US-Neural2-D', gender: 'MALE' },
-        { name: 'en-US-Neural2-J', gender: 'MALE' },
-        { name: 'en-US-Neural2-F', gender: 'FEMALE' },
-        { name: 'en-US-Neural2-H', gender: 'FEMALE' },
-        { name: 'en-US-Neural2-C', gender: 'FEMALE' },
-        { name: 'en-GB-Neural2-B', gender: 'MALE' }
+        { name: 'en-US-Neural2-D', gender: 'MALE' },  // Natural, clear male voice
+        { name: 'en-US-Neural2-J', gender: 'MALE' },  // Warm, friendly male voice
+        { name: 'en-US-Neural2-A', gender: 'MALE' },  // Deep, authoritative male voice
+        { name: 'en-US-Neural2-I', gender: 'MALE' }   // Smooth, professional male voice
       ];
       const selectedVoice = voices[Math.floor(Math.random() * voices.length)];
       
