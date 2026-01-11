@@ -32,6 +32,9 @@ function LandmarkDetail({ landmark, narration, audioContent, onBack }) {
         'en-US-EmmaMultilingualNeural'      // Warm, natural female voice
       ];
       const selectedVoice = voices[Math.floor(Math.random() * voices.length)];
+      const voiceName = selectedVoice.includes('Andrew') ? 'Andrew' : 'Emma';
+      
+      console.log(`🎙️ Using Azure TTS with ${voiceName} (Neural)`);
       
       const azureKey = import.meta.env.VITE_AZURE_SPEECH_KEY;
       const azureRegion = import.meta.env.VITE_AZURE_SPEECH_REGION;
