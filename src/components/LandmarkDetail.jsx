@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 
-function LandmarkDetail({ landmark, narration, audioContent, onBack }) {
+function LandmarkDetail({ landmark, narration, audioContent, onBack, isDailyChallenge = false, onStartQuiz }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [audioEnded, setAudioEnded] = useState(false);
   const audioRef = useRef(null);
   const backgroundMusicRef = useRef(null);
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
@@ -121,6 +122,7 @@ function LandmarkDetail({ landmark, narration, audioContent, onBack }) {
           setIsPlaying(false);
           setIsPaused(false);
           setCurrentTime(0);
+          setAudioEnded(true);
           // Stop background music
           if (backgroundMusicRef.current) {
             backgroundMusicRef.current.pause();
@@ -328,7 +330,7 @@ function LandmarkDetail({ landmark, narration, audioContent, onBack }) {
                   </>
                 )}
               </div>
-
+              
               {duration > 0 && (
                 <div className="mt-4">
                   <div className="flex justify-between text-sm text-gray-600 mb-2">
@@ -342,6 +344,17 @@ function LandmarkDetail({ landmark, narration, audioContent, onBack }) {
                     ></div>
                   </div>
                 </div>
+              )}
+              
+              {/* Daily Challenge Quiz Button */}
+              {isDailyChallenge && audioEnded && onStartQuiz && (
+                <button
+                  onClick={onStartQuiz}
+                  className="w-full mt-4 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold py-4 px-6 rounded-xl transition-all transform hover:scale-105 shadow-lg flex items-center justify-center gap-2"
+                >
+                  <span className="text-xl">🎯</span>
+                  Take Quiz & Complete Challenge
+                </button>
               )}
             </div>
 

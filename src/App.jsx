@@ -16,6 +16,8 @@ function App() {
   const [selectedLandmark, setSelectedLandmark] = useState(null);
   const [narrationData, setNarrationData] = useState(null);
   const [showChallenge, setShowChallenge] = useState(false);
+  const [isDailyChallenge, setIsDailyChallenge] = useState(false);
+  const [showQuiz, setShowQuiz] = useState(false);
 
   const loadLandmarkNarration = async (landmark) => {
     setIsLoading(true);
@@ -61,6 +63,8 @@ function App() {
     setSelectedLandmark(null);
     setNarrationData(null);
     setError(null);
+    setIsDailyChallenge(false);
+    setShowQuiz(false);
   };
 
   const toggleViewMode = (mode) => {
@@ -68,7 +72,8 @@ function App() {
   };
 
   const handleChallengeStart = async (landmark) => {
-    // Start the audio tour after showing challenge intro
+    // Mark this as a daily challenge and start the audio tour
+    setIsDailyChallenge(true);
     await loadLandmarkNarration(landmark);
   };
 
@@ -77,8 +82,8 @@ function App() {
   };
 
   const handleStartQuiz = () => {
-    // Quiz will be shown in DailyChallenge component after audio completes
-    setShowChallenge(true);
+    // Show quiz after audio completes
+    setShowQuiz(true);
   };
 
   return (
@@ -159,6 +164,8 @@ function App() {
             narration={narrationData.narration}
             audioContent={narrationData.audioContent}
             onBack={handleBackToGrid}
+            isDailyChallenge={isDailyChallenge}
+            onStartQuiz={handleStartQuiz}
           />
         ) : null}
       </main>
@@ -168,11 +175,25 @@ function App() {
       </footer>
 
       {/* Daily Challenge Modal */}
-      {showChallenge && (
+      {showChallenge && !showQuiz && (
         <DailyChallenge
           landmarks={landmarksData.landmarks}
           onStartChallenge={handleChallengeStart}
           onClose={handleChallengeClose}
+        />
+      )}
+      
+      {/* Quiz Modal */}
+      {showQuiz && (
+        <DailyChallenge
+          landmarks={landmarksData.landmarks}
+          onStartChallenge={handleChallengeStart}
+          onClose={() => {
+            setShowQuiz(false);
+            setIsDailyChallenge(false);
+            handleBackToGrid();
+          }}
+          startWithQuiz={true}
         />
       )}
     </div>

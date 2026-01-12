@@ -1,4 +1,5 @@
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import { useEffect } from 'react';
 import 'leaflet/dist/leaflet.css';
 import { Icon } from 'leaflet';
 
@@ -23,6 +24,22 @@ const categoryColors = {
   'Medieval Wonder': '#DC2626'
 };
 
+// Component to fix map rendering
+const MapResizer = () => {
+  const map = useMap();
+  
+  useEffect(() => {
+    // Invalidate size after a short delay to ensure proper rendering
+    const timer = setTimeout(() => {
+      map.invalidateSize();
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, [map]);
+  
+  return null;
+};
+
 const MapView = ({ landmarks, onLandmarkSelect, selectedCategory }) => {
   // Filter landmarks by category
   const filteredLandmarks = selectedCategory === 'All' 
@@ -39,6 +56,7 @@ const MapView = ({ landmarks, onLandmarkSelect, selectedCategory }) => {
         maxZoom={18}
         worldCopyJump={true}
       >
+        <MapResizer />
         <TileLayer
           attribution='Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom'
           url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}"

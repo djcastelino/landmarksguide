@@ -21,8 +21,9 @@ const DailyChallenge = ({ landmarks, onStartChallenge, onClose }) => {
   }, [landmarks]);
 
   const handleStartChallenge = () => {
-    setStep('intro');
+    // Close modal and start audio tour
     onStartChallenge(dailyLandmark);
+    onClose(); // Close the modal so user can see the audio playing
   };
 
   const handleStartQuiz = () => {
