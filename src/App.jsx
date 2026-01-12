@@ -2,15 +2,20 @@ import { useState, useEffect } from 'react';
 import Header from './components/Header';
 import LandmarkGrid from './components/LandmarkGrid';
 import LandmarkDetail from './components/LandmarkDetail';
+import MapView from './components/MapView';
+import DailyChallenge from './components/DailyChallenge';
+import ChallengeBanner from './components/ChallengeBanner';
 import { fetchWikipediaSummary, generateNarration } from './services/api';
 import landmarksData from './data/landmarks.json';
 
 function App() {
   const [currentView, setCurrentView] = useState('grid');
+  const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'map'
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [selectedLandmark, setSelectedLandmark] = useState(null);
   const [narrationData, setNarrationData] = useState(null);
+  const [showChallenge, setShowChallenge] = useState(false);
 
   const loadLandmarkNarration = async (landmark) => {
     setIsLoading(true);
@@ -58,6 +63,24 @@ function App() {
     setError(null);
   };
 
+  const toggleViewMode = (mode) => {
+    setViewMode(mode);
+  };
+
+  const handleChallengeStart = async (landmark) => {
+    // Start the audio tour after showing challenge intro
+    await loadLandmarkNarration(landmark);
+  };
+
+  const handleChallengeClose = () => {
+    setShowChallenge(false);
+  };
+
+  const handleStartQuiz = () => {
+    // Quiz will be shown in DailyChallenge component after audio completes
+    setShowChallenge(true);
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 via-white to-green-50">
       {currentView === 'grid' && (
@@ -78,11 +101,58 @@ function App() {
         )}
 
         {currentView === 'grid' ? (
-          <LandmarkGrid 
-            landmarks={landmarksData.landmarks}
-            onLandmarkSelect={handleLandmarkSelect}
-            isLoading={isLoading}
-          />
+          <div>
+            {/* Daily Challenge Banner */}
+            <div className="mt-8">
+              <ChallengeBanner
+                landmarks={landmarksData.landmarks}
+                onClick={() => setShowChallenge(true)}
+              />
+            </div>
+
+            {/* View Toggle */}
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
+              <div className="flex justify-center gap-2">
+                <button
+                  onClick={() => toggleViewMode('grid')}
+                  className={`px-6 py-3 rounded-xl font-semibold transition-all ${
+                    viewMode === 'grid'
+                      ? 'bg-blue-600 text-white shadow-lg scale-105'
+                      : 'bg-white text-gray-700 border-2 border-gray-200 hover:border-blue-300 hover:bg-blue-50'
+                  }`}
+                >
+                  📱 Grid View
+                </button>
+                <button
+                  onClick={() => toggleViewMode('map')}
+                  className={`px-6 py-3 rounded-xl font-semibold transition-all ${
+                    viewMode === 'map'
+                      ? 'bg-blue-600 text-white shadow-lg scale-105'
+                      : 'bg-white text-gray-700 border-2 border-gray-200 hover:border-blue-300 hover:bg-blue-50'
+                  }`}
+                >
+                  🗺️ Map View
+                </button>
+              </div>
+            </div>
+
+            {/* Content */}
+            {viewMode === 'grid' ? (
+              <LandmarkGrid 
+                landmarks={landmarksData.landmarks}
+                onLandmarkSelect={handleLandmarkSelect}
+                isLoading={isLoading}
+              />
+            ) : (
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <MapView
+                  landmarks={landmarksData.landmarks}
+                  onLandmarkSelect={handleLandmarkSelect}
+                  selectedCategory="All"
+                />
+              </div>
+            )}
+          </div>
         ) : currentView === 'detail' && selectedLandmark && narrationData ? (
           <LandmarkDetail
             landmark={selectedLandmark}
@@ -94,8 +164,17 @@ function App() {
       </main>
 
       <footer className="py-8 text-center text-gray-400 text-xs">
-        &copy; {new Date().getFullYear()} Monument AI. Discover the world's greatest landmarks.
+        &copy; {new Date().getFullYear()} Geonauts Guide. Your daily geography adventure.
       </footer>
+
+      {/* Daily Challenge Modal */}
+      {showChallenge && (
+        <DailyChallenge
+          landmarks={landmarksData.landmarks}
+          onStartChallenge={handleChallengeStart}
+          onClose={handleChallengeClose}
+        />
+      )}
     </div>
   );
 }
