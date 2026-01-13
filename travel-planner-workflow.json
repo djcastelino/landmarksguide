@@ -1,0 +1,115 @@
+{
+  "name": "Trip Planner AI Generator",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "generate-trip",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const destination = $input.item.json.body.destination;\nconst startDate = $input.item.json.body.startDate;\nconst endDate = $input.item.json.body.endDate;\nconst interests = $input.item.json.body.interests;\nconst landmarks = $input.item.json.body.landmarks || [];\n\n// Calculate days\nconst start = new Date(startDate);\nconst end = new Date(endDate);\nconst days = Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;\n\n// Filter landmarks by destination\nconst destinationLandmarks = landmarks.filter(l => \n  destination.toLowerCase().includes(l.city.toLowerCase()) || \n  destination.toLowerCase().includes(l.country.toLowerCase())\n);\n\nreturn {\n  destination,\n  startDate,\n  endDate,\n  interests: interests.join(', '),\n  days,\n  destinationLandmarks: JSON.stringify(destinationLandmarks)\n};"
+      },
+      "id": "extract-data",
+      "name": "Extract Request Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openweathermap.org/data/2.5/forecast",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "={{ $json.destination }}"
+            },
+            {
+              "name": "appid",
+              "value": "YOUR_OPENWEATHER_API_KEY"
+            },
+            {
+              "name": "units",
+              "value": "metric"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "weather-api",
+      "name": "Weather API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "prompt": "=You are an expert travel planner. Create a detailed, personalized {{ $json.days }}-day itinerary for {{ $json.destination }}.\n\nTrip Details:\n- Dates: {{ $json.startDate }} to {{ $json.endDate }}\n- Interests: {{ $json.interests }}\n- Available Landmarks with Audio Tours: {{ $json.destinationLandmarks }}\n\nImportant:\n1. If any landmarks from the list above match this destination, INCLUDE them in the itinerary and mark hasAudioTour: true\n2. Generate a compelling destination description (2-3 sentences)\n3. Provide weather advice and typical temperature range\n4. Suggest 4-6 essential packing items\n5. Create day-by-day itinerary with Morning, Afternoon, and Evening activities\n6. Each activity needs: name, location, duration (in hours), and a practical tip\n7. Mix landmarks (from the provided list) with general activities like restaurants, markets, neighborhoods\n8. Make it realistic and well-paced\n\nReturn ONLY valid JSON in this exact format:\n{\n  \"description\": \"Engaging 2-3 sentence description\",\n  \"weather\": {\n    \"advice\": \"Best time to visit and weather patterns\",\n    \"temperature\": \"Temperature range\"\n  },\n  \"packing\": [\"item1\", \"item2\", \"item3\", \"item4\"],\n  \"itinerary\": [\n    {\n      \"day\": 1,\n      \"title\": \"Day theme\",\n      \"activities\": [\n        {\n          \"time\": \"Morning\",\n          \"emoji\": \"🌅\",\n          \"name\": \"Activity name\",\n          \"location\": \"Specific location\",\n          \"duration\": \"X hours\",\n          \"tip\": \"Helpful tip\",\n          \"hasAudioTour\": false\n        }\n      ]\n    }\n  ]\n}",
+        "options": {}
+      },
+      "id": "llama-ai",
+      "name": "Llama AI",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [900, 300],
+      "credentials": {
+        "groqApi": {
+          "id": "YOUR_GROQ_CREDENTIAL_ID",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const aiResponse = $input.item.json.response || $input.item.json.message?.content || '{}';\nconst parsedAI = JSON.parse(aiResponse);\nconst inputData = $('Extract Request Data').item.json;\n\n// Build final response\nconst result = {\n  destination: inputData.destination,\n  description: parsedAI.description,\n  days: inputData.days,\n  weather: parsedAI.weather,\n  packing: parsedAI.packing,\n  itinerary: parsedAI.itinerary.map((day, index) => ({\n    day: index + 1,\n    title: day.title,\n    date: new Date(new Date(inputData.startDate).getTime() + index * 24 * 60 * 60 * 1000).toISOString().split('T')[0],\n    weather: parsedAI.weather.temperature.split('-')[0] + '°C',\n    activities: day.activities.map(act => ({\n      ...act,\n      mapLink: `https://www.google.com/maps/search/${encodeURIComponent(act.location + ' ' + inputData.destination)}`\n    }))\n  }))\n};\n\nreturn result;"
+      },
+      "id": "format-response",
+      "name": "Format Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1120, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}"
+      },
+      "id": "respond",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1340, 300]
+    }
+  ],
+  "connections": {
+    "webhook": {
+      "main": [[{"node": "extract-data", "type": "main", "index": 0}]]
+    },
+    "extract-data": {
+      "main": [[{"node": "weather-api", "type": "main", "index": 0}]]
+    },
+    "weather-api": {
+      "main": [[{"node": "llama-ai", "type": "main", "index": 0}]]
+    },
+    "llama-ai": {
+      "main": [[{"node": "format-response", "type": "main", "index": 0}]]
+    },
+    "format-response": {
+      "main": [[{"node": "respond", "type": "main", "index": 0}]]
+    }
+  }
+}
