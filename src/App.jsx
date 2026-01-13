@@ -132,23 +132,23 @@ function App() {
               <div className="flex justify-center gap-2">
                 <button
                   onClick={() => toggleViewMode('grid')}
-                  className={`px-6 py-3 rounded-xl font-semibold transition-all ${
+                  className={`flex-1 sm:flex-none px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-semibold transition-all text-sm sm:text-base ${
                     viewMode === 'grid'
                       ? 'bg-blue-600 text-white shadow-lg scale-105'
                       : 'bg-white text-gray-700 border-2 border-gray-200 hover:border-blue-300 hover:bg-blue-50'
                   }`}
                 >
-                  📱 Grid View
+                  📱 Grid
                 </button>
                 <button
                   onClick={() => toggleViewMode('map')}
-                  className={`px-6 py-3 rounded-xl font-semibold transition-all ${
+                  className={`flex-1 sm:flex-none px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-semibold transition-all text-sm sm:text-base ${
                     viewMode === 'map'
                       ? 'bg-blue-600 text-white shadow-lg scale-105'
                       : 'bg-white text-gray-700 border-2 border-gray-200 hover:border-blue-300 hover:bg-blue-50'
                   }`}
                 >
-                  🗺️ Map View
+                  🗺️ Map
                 </button>
               </div>
             </div>
