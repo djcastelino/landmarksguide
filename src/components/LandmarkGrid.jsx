@@ -242,7 +242,7 @@ function LandmarkGrid({ landmarks, onLandmarkSelect, isLoading }) {
           onClick={() => setShowAllLandmarks(true)}
           className="px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-800 text-white font-bold text-lg rounded-xl hover:from-purple-700 hover:to-purple-900 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1"
         >
-          📚 Browse All {landmarks.length} Landmarks
+          📚 Browse All Landmarks
         </button>
       </div>
     </div>
