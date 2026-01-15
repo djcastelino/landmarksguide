@@ -11,6 +11,7 @@ const CityGuess = () => {
   const [showStats, setShowStats] = useState(false);
   const [showArchive, setShowArchive] = useState(false);
   const [archiveDate, setArchiveDate] = useState(null);
+  const [isArchiveMode, setIsArchiveMode] = useState(false);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
   const audioRef = useRef(null);
@@ -35,6 +36,9 @@ const CityGuess = () => {
   }, []);
 
   const saveGame = (updatedGuesses, updatedRevealed, updatedState, updatedAttempts) => {
+    // Don't save archive games
+    if (isArchiveMode) return;
+    
     const today = new Date().toDateString();
     const gameData = {
       date: today,
@@ -46,7 +50,7 @@ const CityGuess = () => {
     };
     localStorage.setItem('cityGuess', JSON.stringify(gameData));
     
-    // Update stats when game ends
+    // Update stats when game ends (not for archive games)
     if (updatedState === 'won' || updatedState === 'lost') {
       updateStats(updatedState === 'won', updatedGuesses.length);
     }
@@ -130,6 +134,7 @@ const CityGuess = () => {
     const city = getDailyCity(date);
     setDailyCity(city);
     setArchiveDate(date);
+    setIsArchiveMode(true);
     setGuesses([]);
     setRevealedClues(1);
     setGameState('playing');
@@ -200,6 +205,7 @@ const CityGuess = () => {
 
   const backToToday = () => {
     setArchiveDate(null);
+    setIsArchiveMode(false);
     const city = getDailyCity();
     setDailyCity(city);
     
@@ -615,33 +621,27 @@ const CityGuess = () => {
               </button>
             </div>
 
-            <p className="text-gray-600 mb-6">Play puzzles from previous days</p>
+            <p className="text-gray-600 mb-6">Test your knowledge on yesterday's puzzle (won't affect your stats)</p>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mb-6">
+            <div className="flex justify-center mb-6">
               {(() => {
                 const today = new Date();
-                const days = [];
-                for (let i = 1; i <= 30; i++) {
-                  const date = new Date(today);
-                  date.setDate(date.getDate() - i);
-                  days.push(date);
-                }
-                return days.map((date, index) => {
-                  const city = getDailyCity(date);
-                  return (
-                    <button
-                      key={index}
-                      onClick={() => playArchiveGame(date)}
-                      className="bg-purple-50 hover:bg-purple-100 border-2 border-purple-200 p-4 rounded-xl transition-all text-left"
-                    >
-                      <div className="text-sm text-gray-600 mb-1">
-                        {date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                      </div>
-                      <div className="font-bold text-purple-900 truncate">{city.name}</div>
-                      <div className="text-xs text-gray-500 mt-1 capitalize">{city.difficulty}</div>
-                    </button>
-                  );
-                });
+                const yesterday = new Date(today);
+                yesterday.setDate(yesterday.getDate() - 1);
+                const city = getDailyCity(yesterday);
+                
+                return (
+                  <button
+                    onClick={() => playArchiveGame(yesterday)}
+                    className="bg-purple-50 hover:bg-purple-100 border-2 border-purple-200 p-6 rounded-xl transition-all text-center min-w-[200px]"
+                  >
+                    <div className="text-sm text-gray-600 mb-2">
+                      {yesterday.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}
+                    </div>
+                    <div className="text-2xl font-bold text-purple-900 mb-1">{city.name}</div>
+                    <div className="text-sm text-gray-500 capitalize">{city.difficulty} difficulty</div>
+                  </button>
+                );
               })()}
             </div>
 
