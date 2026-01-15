@@ -14,7 +14,10 @@ const CityGuess = () => {
   const [isArchiveMode, setIsArchiveMode] = useState(false);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const [isGeneratingAudio, setIsGeneratingAudio] = useState(false);
+  const [showAutocomplete, setShowAutocomplete] = useState(false);
+  const [filteredCities, setFilteredCities] = useState([]);
   const audioRef = useRef(null);
+  const inputRef = useRef(null);
 
   useEffect(() => {
     const city = getDailyCity();
@@ -226,33 +229,77 @@ const CityGuess = () => {
 
   const handleGuess = (e) => {
     e.preventDefault();
-    
-    if (!currentGuess.trim() || gameState !== 'playing') return;
+    if (!currentGuess.trim()) return;
 
-    const guess = currentGuess.trim();
-    const isCorrect = guess.toLowerCase() === dailyCity.name.toLowerCase();
-    
-    const newGuesses = [...guesses, { text: guess, isCorrect }];
+    const normalizedGuess = currentGuess.trim().toLowerCase();
+    const normalizedAnswer = dailyCity.name.toLowerCase();
+    const isCorrect = normalizedGuess === normalizedAnswer;
+
+    const newGuesses = [...guesses, { text: currentGuess.trim(), isCorrect }];
     const newAttempts = attemptsRemaining - 1;
-    
+
     setGuesses(newGuesses);
+    setAttemptsRemaining(newAttempts);
     setCurrentGuess('');
-    
+    setShowAutocomplete(false);
+
     if (isCorrect) {
       setGameState('won');
       saveGame(newGuesses, revealedClues, 'won', newAttempts);
+      
+      // Update stats only if not archive mode
+      if (!isArchiveMode) {
+        updateStats(true, newGuesses.length);
+      }
     } else if (newAttempts === 0) {
       setGameState('lost');
       saveGame(newGuesses, 6, 'lost', 0);
-      setRevealedClues(6); // Reveal all clues on loss
+      
+      // Update stats only if not archive mode
+      if (!isArchiveMode) {
+        updateStats(false, 6);
+      }
     } else {
-      setAttemptsRemaining(newAttempts);
       // Reveal next clue after wrong guess
       const newRevealed = Math.min(revealedClues + 1, 6);
       setRevealedClues(newRevealed);
       saveGame(newGuesses, newRevealed, 'playing', newAttempts);
     }
   };
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setCurrentGuess(value);
+    
+    if (value.trim().length > 0) {
+      const matches = CITIES
+        .filter(city => city.name.toLowerCase().startsWith(value.trim().toLowerCase()))
+        .slice(0, 8);
+      setFilteredCities(matches);
+      setShowAutocomplete(matches.length > 0);
+    } else {
+      setShowAutocomplete(false);
+      setFilteredCities([]);
+    }
+  };
+
+  const handleSelectCity = (cityName) => {
+    setCurrentGuess(cityName);
+    setShowAutocomplete(false);
+    setFilteredCities([]);
+    inputRef.current?.focus();
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (inputRef.current && !inputRef.current.contains(event.target)) {
+        setShowAutocomplete(false);
+      }
+    };
+    
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   if (!dailyCity) {
     return <div className="max-w-4xl mx-auto px-4 py-20 text-center">Loading...</div>;
@@ -329,15 +376,40 @@ const CityGuess = () => {
       {/* Input Form */}
       {gameState === 'playing' && (
         <form onSubmit={handleGuess} className="bg-white rounded-2xl shadow-xl p-6">
-          <div className="flex gap-3">
-            <input
-              type="text"
-              value={currentGuess}
-              onChange={(e) => setCurrentGuess(e.target.value)}
-              placeholder="Enter city name..."
-              className="flex-1 px-6 py-4 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none text-lg"
-              autoFocus
-            />
+          <div className="flex gap-3 relative">
+            <div className="flex-1 relative">
+              <input
+                ref={inputRef}
+                type="text"
+                value={currentGuess}
+                onChange={handleInputChange}
+                placeholder="Enter city name..."
+                className="w-full px-6 py-4 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none text-lg"
+                autoFocus
+                autoComplete="off"
+              />
+              
+              {/* Autocomplete Dropdown */}
+              {showAutocomplete && filteredCities.length > 0 && (
+                <div className="absolute z-10 w-full mt-2 bg-white border-2 border-purple-200 rounded-xl shadow-2xl max-h-80 overflow-y-auto">
+                  {filteredCities.map((city) => (
+                    <button
+                      key={city.id}
+                      type="button"
+                      onClick={() => handleSelectCity(city.name)}
+                      className="w-full text-left px-6 py-3 hover:bg-purple-50 transition-colors border-b border-gray-100 last:border-b-0 flex items-center gap-3"
+                    >
+                      <span className="text-xl">🌍</span>
+                      <div>
+                        <div className="font-semibold text-gray-900">{city.name}</div>
+                        <div className="text-sm text-gray-500">{city.country}, {city.continent}</div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            
             <button
               type="submit"
               className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold px-8 py-4 rounded-xl transition-all shadow-lg"
