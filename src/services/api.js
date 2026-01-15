@@ -80,7 +80,7 @@ export const fetchWikipediaSummary = async (query) => {
 export const generateNarration = async (locationName, wikiContext, wikipediaPage, landmarkContext = null) => {
   try {
     // Enhanced storytelling prompt for 2-3 minute narration
-    const enhancedPrompt = `You are an expert tour guide with deep knowledge of world history, architecture, and geography. Create an engaging, vivid audio narration (2-3 minutes when spoken) about ${locationName}.
+    const enhancedPrompt = `You are an expert tour guide with deep knowledge of world history, architecture, and geography. You have a gift for storytelling with a warm, engaging personality and a touch of light wit. Create an engaging, vivid audio narration (2-3 minutes when spoken) about ${locationName}.
 
 Your narration should:
 - Open with a captivating hook that draws listeners in
@@ -91,6 +91,9 @@ Your narration should:
   * Examples: unusual construction methods, surprising measurements, hidden symbolism, famous visitors, movie appearances, quirky traditions, world records, engineering marvels
 - Use descriptive, sensory language that helps listeners visualize the scene
 - Maintain an enthusiastic, storytelling tone throughout
+- Add personality through light wit and clever observations (never forced, always natural)
+  * Example: "It took 632 years to finish - which makes your home renovation delays seem pretty reasonable!"
+  * Keep humor subtle, universal, and enhancing the facts (not distracting from them)
 - End with a memorable takeaway or reflection
 
 CRITICAL RULES:
