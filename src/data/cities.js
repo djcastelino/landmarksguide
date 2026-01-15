@@ -5528,6 +5528,1106 @@ export const CITIES = [
     funFact: "Victoria has the mildest climate in Canada - rarely freezes or gets hot! The city is more British than Britain with double-decker buses and afternoon tea tradition. Butchart Gardens attracts nearly 1 million visitors annually with stunning floral displays. Victoria is on Vancouver Island, not Vancouver. The city has more restaurants per capita than anywhere in Canada!",
     funFactSource: "Tourism Victoria",
     funFactSourceUrl: "https://www.tourismvictoria.com/"
+  },
+
+  {
+    id: 251,
+    name: "Salzburg",
+    continent: "Europe",
+    country: "Austria",
+    difficulty: "medium",
+    clues: [
+      "Alpine city famous for classical music and baroque architecture",
+      "Birthplace of Mozart in the Austrian Alps",
+      "Known for hilltop fortress and 'The Sound of Music' filming locations",
+      "The Salzach River flows through this musical Austrian city",
+      "Austrian city with Hohensalzburg Fortress and Mozart's birthplace",
+      "Austrian city on Salzach River, birthplace of Mozart"
+    ],
+    waterFeature: "Salzach River",
+    population: "155,000 (245K metro)",
+    famousFor: "Mozart birthplace, Hohensalzburg Fortress, Sound of Music tours, Mirabell Palace",
+    funFact: "Salzburg means 'Salt Castle' and the city grew rich from salt mining! The Hohensalzburg Fortress is one of Europe's largest medieval castles. Mozart was born here in 1756 and composed over 600 works. The city has more cafes and restaurants per capita than Vienna!",
+    funFactSource: "Salzburg Tourism",
+    funFactSourceUrl: "https://www.salzburg.info/"
+  },
+
+  {
+    id: 252,
+    name: "Tallinn",
+    continent: "Europe",
+    country: "Estonia",
+    difficulty: "hard",
+    clues: [
+      "Baltic capital with medieval old town and digital innovation",
+      "Northern European port city on Gulf of Finland",
+      "Known for preserved city walls, e-government, and UNESCO heritage",
+      "This Estonian capital is one of Europe's most digital cities",
+      "Baltic capital with Toompea Castle and Alexander Nevsky Cathedral",
+      "Estonian capital on Baltic Sea with medieval walls"
+    ],
+    waterFeature: "Baltic Sea, Gulf of Finland",
+    population: "440,000 (540K metro)",
+    famousFor: "Medieval Old Town, Toompea Castle, e-governance, digital innovation",
+    funFact: "Tallinn is the world's most digitally advanced capital - 99% of government services are online! Estonia invented Skype here. The medieval Old Town has been continuously inhabited for 800+ years. Free public Wi-Fi covers the entire city. Estonia was the first country to offer e-Residency!",
+    funFactSource: "Visit Estonia",
+    funFactSourceUrl: "https://www.visitestonia.com/"
+  },
+
+  {
+    id: 253,
+    name: "Casablanca",
+    continent: "Africa",
+    country: "Morocco",
+    difficulty: "medium",
+    clues: [
+      "Moroccan port city famous for a classic Hollywood film",
+      "North African commercial hub on Atlantic coast",
+      "Known for Hassan II Mosque and art deco architecture",
+      "The Atlantic Ocean laps at this Moroccan metropolis",
+      "Morocco's largest city with Hassan II Mosque by the sea",
+      "Moroccan coastal city famous for its namesake movie"
+    ],
+    waterFeature: "Atlantic Ocean",
+    population: "3.4 million (4.3M metro)",
+    famousFor: "Hassan II Mosque, 'Casablanca' film, art deco, Rick's Café",
+    funFact: "Casablanca is Morocco's economic powerhouse, handling 75% of the country's commerce! Hassan II Mosque has the world's tallest minaret at 210 meters and can hold 25,000 worshippers. The famous 'Rick's Café' from the 1942 film was recreated as a real restaurant in 2004!",
+    funFactSource: "Morocco Tourism",
+    funFactSourceUrl: "https://www.visitmorocco.com/"
+  },
+
+  {
+    id: 254,
+    name: "Bologna",
+    continent: "Europe",
+    country: "Italy",
+    difficulty: "hard",
+    clues: [
+      "Italian city famous for its university, porticos, and cuisine",
+      "Northern Italian city with medieval towers and arcades",
+      "Known for ragù sauce, mortadella, and red brick architecture",
+      "This university city has 40km of covered walkways",
+      "Italian city with Two Towers and Europe's oldest university",
+      "Italian 'Red City' famous for pasta sauce and porticos"
+    ],
+    waterFeature: "Reno River, Savena River",
+    population: "390,000 (1M metro)",
+    famousFor: "University of Bologna (oldest in Europe), porticos, bolognese sauce, Two Towers",
+    funFact: "Bologna has the oldest university in the Western world, founded in 1088! The city has 38km of covered walkways called porticos. Bologna's nickname 'La Grassa' (the fat one) celebrates its culinary excellence. The Two Towers lean more than the Tower of Pisa!",
+    funFactSource: "Bologna Welcome",
+    funFactSourceUrl: "https://www.bolognawelcome.com/"
+  },
+
+  {
+    id: 255,
+    name: "Santiago",
+    continent: "South America",
+    country: "Chile",
+    difficulty: "easy",
+    clues: [
+      "South American capital surrounded by Andes mountains",
+      "Chilean capital in a valley with mountain views",
+      "Known for vineyards, ski resorts, and colonial architecture",
+      "The Andes tower over this Chilean capital city",
+      "Chilean capital with Cerro San Cristóbal and Plaza de Armas",
+      "Chilean capital nestled in Andes mountains"
+    ],
+    waterFeature: "Mapocho River",
+    population: "6 million (7.1M metro)",
+    famousFor: "Andes views, wine regions, San Cristóbal Hill, La Moneda Palace",
+    funFact: "Santiago is one of the world's most affordable wine capitals with over 70 wineries nearby! The city sits 1,700 feet above sea level with Andes peaks reaching 20,000 feet. You can ski in the Andes and swim at the beach on the same day!",
+    funFactSource: "Chile Travel",
+    funFactSourceUrl: "https://chile.travel/"
+  },
+
+  {
+    id: 256,
+    name: "Zurich",
+    continent: "Europe",
+    country: "Switzerland",
+    difficulty: "easy",
+    clues: [
+      "Swiss financial hub on a lake with Alpine views",
+      "Largest Swiss city known for banking and watches",
+      "Known for pristine streets, chocolate shops, and luxury",
+      "Lake Zurich reflects this prosperous Swiss city",
+      "Swiss banking capital with Bahnhofstrasse and lake views",
+      "Swiss city on a lake, global financial center"
+    ],
+    waterFeature: "Lake Zurich, Limmat River",
+    population: "420,000 (1.5M metro)",
+    famousFor: "Banking, watches, Bahnhofstrasse, chocolate, Swiss quality",
+    funFact: "Zurich is consistently ranked among the world's most liveable and expensive cities! Bahnhofstrasse is one of the world's most expensive shopping streets. The city has more than 500 bars and nightclubs. Zurich tap water is cleaner than most bottled water!",
+    funFactSource: "Zurich Tourism",
+    funFactSourceUrl: "https://www.zuerich.com/"
+  },
+
+  {
+    id: 257,
+    name: "Krakow",
+    continent: "Europe",
+    country: "Poland",
+    difficulty: "medium",
+    clues: [
+      "Polish city with medieval square and nearby salt mines",
+      "Former capital of Poland with royal castle",
+      "Known for Wawel Castle, Jewish quarter, and Gothic architecture",
+      "The Vistula River flows past this historic Polish city",
+      "Polish city with Europe's largest medieval market square",
+      "Polish cultural capital near Auschwitz with Wawel Castle"
+    ],
+    waterFeature: "Vistula River",
+    population: "780,000 (1.8M metro)",
+    famousFor: "Wawel Castle, Main Market Square, Kazimierz Jewish Quarter, Wieliczka Salt Mine",
+    funFact: "Krakow's Main Market Square is Europe's largest medieval town square! The Wieliczka Salt Mine has been operating for 700+ years and has an underground chapel made entirely of salt. A trumpet call is played every hour from St. Mary's Church!",
+    funFactSource: "Krakow Tourism",
+    funFactSourceUrl: "https://www.krakow.travel/"
+  },
+
+  {
+    id: 258,
+    name: "Auckland",
+    continent: "Oceania",
+    country: "New Zealand",
+    difficulty: "easy",
+    clues: [
+      "New Zealand's largest city built on volcanic hills",
+      "South Pacific port city with Sky Tower and harbors",
+      "Known as 'City of Sails' with Polynesian heritage",
+      "The Tasman Sea and Pacific Ocean surround this city",
+      "New Zealand's largest city with Sky Tower and harbors",
+      "New Zealand city of sails between two harbors"
+    ],
+    waterFeature: "Waitemata Harbour, Manukau Harbour, Pacific Ocean",
+    population: "1.5 million (1.7M metro)",
+    famousFor: "Sky Tower, sailing, volcanoes, Polynesian culture, beaches",
+    funFact: "Auckland has more boats per capita than any other city in the world! The city is built on 50+ dormant volcanoes. One in four Aucklanders owns a boat. The Sky Tower can withstand earthquakes and 200 km/h winds!",
+    funFactSource: "Auckland Tourism",
+    funFactSourceUrl: "https://www.aucklandnz.com/"
+  },
+
+  {
+    id: 259,
+    name: "Cartagena",
+    continent: "South America",
+    country: "Colombia",
+    difficulty: "medium",
+    clues: [
+      "Colombian Caribbean port with colonial walls",
+      "Colorful coastal city with Spanish fortifications",
+      "Known for walled old town, salsa, and tropical climate",
+      "The Caribbean Sea laps at this Colombian fortress city",
+      "Colombian walled city with San Felipe Castle",
+      "Colombian Caribbean city with colorful colonial architecture"
+    ],
+    waterFeature: "Caribbean Sea",
+    population: "1 million (1.2M metro)",
+    famousFor: "Walled Old Town, San Felipe Castle, colonial architecture, Caribbean beaches",
+    funFact: "Cartagena's city walls took 200 years to build! The city was founded in 1533 and became the richest port in South America. San Felipe Castle has secret tunnels that amplify sound to detect approaching enemies!",
+    funFactSource: "Colombia Travel",
+    funFactSourceUrl: "https://www.colombia.travel/"
+  },
+
+  {
+    id: 260,
+    name: "Bruges",
+    continent: "Europe",
+    country: "Belgium",
+    difficulty: "medium",
+    clues: [
+      "Belgian medieval city with canals and chocolate",
+      "Northern European town known as 'Venice of the North'",
+      "Known for lace, beer, waffles, and Gothic architecture",
+      "Canals wind through this perfectly preserved Belgian city",
+      "Belgian city with medieval Belfry tower and canals",
+      "Belgian canal city famous for chocolate and lace"
+    ],
+    waterFeature: "Canals, Reie River",
+    population: "120,000 (270K metro)",
+    famousFor: "Canals, medieval architecture, chocolate, lace, Belfry tower",
+    funFact: "Bruges' entire historic center is a UNESCO World Heritage site with 80+ bridges! The city has been making chocolate since the 1600s with 50+ chocolate shops today. The Belfry tower has 366 steps and 47 bells!",
+    funFactSource: "Visit Bruges",
+    funFactSourceUrl: "https://www.visitbruges.be/"
+  },
+
+  {
+    id: 261,
+    name: "Porto",
+    continent: "Europe",
+    country: "Portugal",
+    difficulty: "medium",
+    clues: [
+      "Portuguese coastal city famous for fortified wine",
+      "Northern Portuguese city with colorful riverside buildings",
+      "Known for port wine cellars, Dom Luís Bridge, and tiles",
+      "The Douro River meets the Atlantic at this wine city",
+      "Portuguese city with port wine cellars and iconic bridge",
+      "Portuguese coastal city famous for port wine"
+    ],
+    waterFeature: "Douro River, Atlantic Ocean",
+    population: "230,000 (1.7M metro)",
+    famousFor: "Port wine, Dom Luís Bridge, Ribeira district, azulejo tiles",
+    funFact: "Porto gave its name to both Portugal and port wine! The city has been producing port wine for over 300 years. Dom Luís Bridge was designed by a student of Gustave Eiffel. The city has more monuments than Lisbon!",
+    funFactSource: "Visit Porto",
+    funFactSourceUrl: "https://www.visitporto.travel/"
+  },
+
+  {
+    id: 262,
+    name: "Quito",
+    continent: "South America",
+    country: "Ecuador",
+    difficulty: "hard",
+    clues: [
+      "South American capital closest to the equator in the Andes",
+      "High-altitude capital with colonial churches and volcanoes",
+      "Known for equator line, cable car, and preserved historic center",
+      "This Ecuadorian capital sits at 9,350 feet elevation",
+      "Andean capital with El Panecillo statue and equator monument",
+      "Ecuadorian capital in Andes near the equator"
+    ],
+    waterFeature: "Guayllabamba River, Machángara River",
+    population: "1.8 million (2.7M metro)",
+    famousFor: "Equator monument, Old Town, TelefériQo cable car, colonial churches",
+    funFact: "Quito is the world's second-highest capital city at 9,350 feet! The historic center is the largest and best-preserved in the Americas. You can stand on the equator at the 'Middle of the World' monument!",
+    funFactSource: "Ecuador Travel",
+    funFactSourceUrl: "https://ecuador.travel/"
+  },
+
+  {
+    id: 263,
+    name: "Granada",
+    continent: "Europe",
+    country: "Spain",
+    difficulty: "medium",
+    clues: [
+      "Spanish city with Moorish palace and mountain views",
+      "Andalusian city with Islamic architecture and flamenco",
+      "Known for Alhambra fortress, tapas culture, and Sierra Nevada",
+      "The Darro River flows past this Spanish Moorish gem",
+      "Spanish city with the famous Alhambra palace",
+      "Andalusian city with Alhambra and Moorish heritage"
+    ],
+    waterFeature: "Darro River, Genil River",
+    population: "230,000 (500K metro)",
+    famousFor: "Alhambra Palace, Generalife Gardens, Albaicín neighborhood, Sierra Nevada",
+    funFact: "Granada's Alhambra is the most visited monument in Spain with 3 million visitors yearly! The city was the last Muslim kingdom in Spain until 1492. Granada offers free tapas with every drink!",
+    funFactSource: "Granada Tourism",
+    funFactSourceUrl: "https://www.granadatur.com/"
+  },
+
+  {
+    id: 264,
+    name: "Jaipur",
+    continent: "Asia",
+    country: "India",
+    difficulty: "medium",
+    clues: [
+      "Indian city known as 'Pink City' for its terracotta buildings",
+      "Rajasthani capital with palaces and fortresses",
+      "Known for Hawa Mahal, Amber Fort, and gems",
+      "This royal Indian city is part of the Golden Triangle",
+      "Pink-walled Indian city with Palace of Winds",
+      "Indian 'Pink City' with Amber Fort and royal palaces"
+    ],
+    waterFeature: "Man Sagar Lake",
+    population: "3.1 million (4M metro)",
+    famousFor: "Pink City walls, Hawa Mahal, Amber Fort, City Palace, gemstones",
+    funFact: "Jaipur was painted pink in 1876 to welcome Britain's Prince Albert! The Hawa Mahal 'Palace of Winds' has 953 windows to allow royal women to observe street life. The city was India's first planned city!",
+    funFactSource: "Rajasthan Tourism",
+    funFactSourceUrl: "https://www.tourism.rajasthan.gov.in/"
+  },
+
+  {
+    id: 265,
+    name: "Seville",
+    continent: "Europe",
+    country: "Spain",
+    difficulty: "medium",
+    clues: [
+      "Andalusian city famous for flamenco and bullfighting",
+      "Southern Spanish city with Moorish royal palace",
+      "Known for tapas, cathedral with Giralda tower, and oranges",
+      "The Guadalquivir River flows through this passionate Spanish city",
+      "Spanish city with Royal Alcázar and world's largest Gothic cathedral",
+      "Andalusian capital famous for flamenco and oranges"
+    ],
+    waterFeature: "Guadalquivir River",
+    population: "690,000 (1.5M metro)",
+    famousFor: "Flamenco, Real Alcázar, Seville Cathedral, tapas, bullfighting",
+    funFact: "Seville has the world's largest Gothic cathedral where Christopher Columbus is buried! The city has 60,000+ orange trees lining its streets. The Royal Alcázar was used in Game of Thrones!",
+    funFactSource: "Seville Tourism",
+    funFactSourceUrl: "https://www.visitasevilla.es/"
+  },
+
+  {
+    id: 266,
+    name: "Reykjavik",
+    continent: "Europe",
+    country: "Iceland",
+    difficulty: "medium",
+    clues: [
+      "World's northernmost capital with geothermal energy",
+      "Nordic capital famous for northern lights and volcanoes",
+      "Known for colorful houses, Viking heritage, and hot springs",
+      "The Atlantic Ocean surrounds this volcanic island capital",
+      "Icelandic capital with Hallgrímskirkja church and Blue Lagoon",
+      "Iceland's capital powered by geothermal energy"
+    ],
+    waterFeature: "Faxaflói Bay, Atlantic Ocean",
+    population: "130,000 (230K metro)",
+    famousFor: "Northern lights, geothermal pools, Hallgrímskirkja, Viking heritage",
+    funFact: "Reykjavik is the world's northernmost capital city! It's powered entirely by geothermal and hydroelectric energy. Reykjavik means 'Smoky Bay' from geothermal steam. Iceland has more writers per capita than any other country!",
+    funFactSource: "Visit Reykjavik",
+    funFactSourceUrl: "https://www.visitreykjavik.is/"
+  },
+
+  {
+    id: 267,
+    name: "Dubrovnik",
+    continent: "Europe",
+    country: "Croatia",
+    difficulty: "medium",
+    clues: [
+      "Croatian walled city on the Adriatic coast",
+      "Mediterranean port with limestone streets and Game of Thrones fame",
+      "Known for city walls, cable car, and 'Pearl of the Adriatic'",
+      "The Adriatic Sea surrounds this ancient walled city",
+      "Croatian city with massive walls used in Game of Thrones",
+      "Croatian 'Pearl of the Adriatic' with medieval walls"
+    ],
+    waterFeature: "Adriatic Sea",
+    population: "42,000 (120K metro)",
+    famousFor: "Medieval walls, Old Town, Game of Thrones filming, cable car",
+    funFact: "Dubrovnik's city walls are 2km long and up to 25m high! The city was a powerful maritime republic rivaling Venice for 450 years. Game of Thrones used it as King's Landing!",
+    funFactSource: "Dubrovnik Tourism",
+    funFactSourceUrl: "https://www.tzdubrovnik.hr/"
+  },
+
+  {
+    id: 268,
+    name: "Cusco",
+    continent: "South America",
+    country: "Peru",
+    difficulty: "medium",
+    clues: [
+      "Peruvian Andean city gateway to Machu Picchu",
+      "Former Incan capital at high altitude",
+      "Known for ruins, colonial churches, and llamas",
+      "This ancient city sits at 11,150 feet in the Andes",
+      "Peruvian city with Incan walls and Spanish colonial architecture",
+      "Peruvian gateway to Machu Picchu with Incan heritage"
+    ],
+    waterFeature: "Huatanay River",
+    population: "430,000 (470K metro)",
+    famousFor: "Machu Picchu gateway, Incan ruins, Sacsayhuamán, Plaza de Armas",
+    funFact: "Cusco was the capital of the Incan Empire and means 'navel of the world'! The Spanish built churches directly on Incan foundations. Sacsayhuamán fortress has stones weighing up to 200 tons!",
+    funFactSource: "Peru Travel",
+    funFactSourceUrl: "https://www.peru.travel/"
+  },
+
+  {
+    id: 269,
+    name: "Bergen",
+    continent: "Europe",
+    country: "Norway",
+    difficulty: "hard",
+    clues: [
+      "Norwegian fjord city with colorful wooden houses",
+      "Rainy port city gateway to Norwegian fjords",
+      "Known for Bryggen wharf, fish market, and surrounding mountains",
+      "Seven mountains surround this Norwegian UNESCO city",
+      "Norwegian city with historic Hanseatic wharf",
+      "Norwegian fjord city with colorful Bryggen buildings"
+    ],
+    waterFeature: "Byfjorden, Norwegian Sea, fjords",
+    population: "280,000 (420K metro)",
+    famousFor: "Bryggen wharf, Bergen Fish Market, Fløibanen funicular, gateway to fjords",
+    funFact: "Bergen is Europe's rainiest city with 240+ rainy days per year! Bryggen wharf dates to 1070 and is a UNESCO site. The city was Norway's capital in the 13th century!",
+    funFactSource: "Visit Bergen",
+    funFactSourceUrl: "https://www.visitbergen.com/"
+  },
+
+  {
+    id: 270,
+    name: "Hanoi",
+    continent: "Asia",
+    country: "Vietnam",
+    difficulty: "easy",
+    clues: [
+      "Vietnamese capital with French colonial architecture",
+      "Southeast Asian city with lakes and ancient temples",
+      "Known for street food, Old Quarter, and motorbikes",
+      "The Red River flows through this thousand-year-old capital",
+      "Vietnamese capital with Hoan Kiem Lake and Old Quarter",
+      "Vietnam's capital city over 1,000 years old"
+    ],
+    waterFeature: "Red River, Hoan Kiem Lake",
+    population: "8.2 million (9M metro)",
+    famousFor: "Old Quarter, Hoan Kiem Lake, street food, water puppets, French Quarter",
+    funFact: "Hanoi is over 1,000 years old! The Old Quarter has 36 streets named after the goods once sold there. Hanoi has more motorbikes than people. The city is famous for egg coffee!",
+    funFactSource: "Vietnam Tourism",
+    funFactSourceUrl: "https://vietnam.travel/"
+  },
+
+  {
+    id: 271,
+    name: "Lima",
+    continent: "South America",
+    country: "Peru",
+    difficulty: "easy",
+    clues: [
+      "Peruvian coastal capital famous for ceviche",
+      "South American city with Spanish colonial center",
+      "Known for gastronomy, Miraflores district, and foggy climate",
+      "The Pacific Ocean borders this culinary capital",
+      "Peruvian capital with Plaza Mayor and amazing cuisine",
+      "Peru's coastal capital known as food capital of South America"
+    ],
+    waterFeature: "Pacific Ocean, Rímac River",
+    population: "9 million (11M metro)",
+    famousFor: "Ceviche, gastronomy, Miraflores, Plaza de Armas, surfing",
+    funFact: "Lima is the culinary capital of South America with 3 restaurants in the World's Top 50! The city was founded by Spanish conquistador Francisco Pizarro in 1535. Lima receives only 1/2 inch of rain per year!",
+    funFactSource: "Peru Travel",
+    funFactSourceUrl: "https://www.peru.travel/"
+  },
+
+  {
+    id: 272,
+    name: "Valencia",
+    continent: "Europe",
+    country: "Spain",
+    difficulty: "medium",
+    clues: [
+      "Spanish Mediterranean city famous for paella",
+      "Third-largest Spanish city with futuristic architecture",
+      "Known for City of Arts and Sciences, beaches, and oranges",
+      "This Spanish city sits on the Mediterranean coast",
+      "Spanish city with City of Arts and Sciences complex",
+      "Spanish coastal city birthplace of paella"
+    ],
+    waterFeature: "Mediterranean Sea, Turia River (gardens)",
+    population: "800,000 (1.6M metro)",
+    famousFor: "Paella, City of Arts and Sciences, Las Fallas festival, beaches",
+    funFact: "Valencia is the birthplace of paella! The City of Arts and Sciences was designed by Santiago Calatrava. Valencia's Turia riverbed was turned into a 9km park. The city produces 70% of Spain's oranges!",
+    funFactSource: "Visit Valencia",
+    funFactSourceUrl: "https://www.visitvalencia.com/"
+  },
+
+  {
+    id: 273,
+    name: "Havana",
+    continent: "North America",
+    country: "Cuba",
+    difficulty: "easy",
+    clues: [
+      "Cuban capital with classic cars and cigars",
+      "Caribbean city with Spanish colonial architecture",
+      "Known for salsa music, rum, and colorful buildings",
+      "The Gulf of Mexico borders this vintage Caribbean capital",
+      "Cuban capital with Malecon seawall and classic American cars",
+      "Cuban capital frozen in time with 1950s cars"
+    ],
+    waterFeature: "Gulf of Mexico, Caribbean Sea",
+    population: "2.1 million (2.4M metro)",
+    famousFor: "Classic cars, cigars, rum, salsa, Malecon, Old Havana",
+    funFact: "Havana has 60,000+ classic American cars from the 1950s due to the U.S. embargo! Old Havana is a UNESCO World Heritage site with 900+ historic buildings. Cuba invented the mojito and daiquiri!",
+    funFactSource: "Cuba Travel",
+    funFactSourceUrl: "https://www.cuba.travel/"
+  },
+
+  {
+    id: 274,
+    name: "Ljubljana",
+    continent: "Europe",
+    country: "Slovenia",
+    difficulty: "hard",
+    clues: [
+      "Slovenian capital with green spaces and dragon symbols",
+      "Alpine capital with baroque and art nouveau architecture",
+      "Known for castle, riverside cafes, and pedestrian center",
+      "The Ljubljanica River winds through this charming capital",
+      "Slovenian capital with Dragon Bridge and hilltop castle",
+      "Slovenia's green capital with castle and dragon emblem"
+    ],
+    waterFeature: "Ljubljanica River",
+    population: "290,000 (540K metro)",
+    famousFor: "Ljubljana Castle, Dragon Bridge, Tivoli Park, car-free center",
+    funFact: "Ljubljana is Europe's greenest capital with 75% green space! The entire city center is car-free. The dragon is the city's symbol. Ljubljana was voted European Green Capital in 2016!",
+    funFactSource: "Visit Ljubljana",
+    funFactSourceUrl: "https://www.visitljubljana.com/"
+  },
+
+  {
+    id: 275,
+    name: "Bilbao",
+    continent: "Europe",
+    country: "Spain",
+    difficulty: "hard",
+    clues: [
+      "Basque city transformed by a Guggenheim museum",
+      "Northern Spanish industrial city turned cultural hub",
+      "Known for pintxos, modern architecture, and Basque language",
+      "The Nervión River flows through this reinvented Spanish city",
+      "Spanish Basque city with titanium-clad Guggenheim Museum",
+      "Basque city famous for Gehry's Guggenheim Museum"
+    ],
+    waterFeature: "Nervión River, Bay of Biscay",
+    population: "350,000 (1M metro)",
+    famousFor: "Guggenheim Museum, pintxos, Basque culture, Casco Viejo",
+    funFact: "Bilbao's Guggenheim Museum transformed the declining industrial city in 1997! The 'Bilbao Effect' describes how signature architecture revitalizes cities. The museum is clad in 33,000 titanium sheets!",
+    funFactSource: "Bilbao Tourism",
+    funFactSourceUrl: "https://www.bilbaoturismo.net/"
+  },
+
+  {
+    id: 276,
+    name: "Adelaide",
+    continent: "Oceania",
+    country: "Australia",
+    difficulty: "medium",
+    clues: [
+      "Australian coastal city famous for wine regions",
+      "Southern Australian capital with parklands",
+      "Known for festivals, vineyards, and Victorian architecture",
+      "The Gulf St Vincent borders this wine capital",
+      "Australian city surrounded by parklands and wine regions",
+      "South Australian capital gateway to Barossa Valley"
+    ],
+    waterFeature: "Torrens River, Gulf St Vincent",
+    population: "1.3 million (1.4M metro)",
+    famousFor: "Wine regions, festivals, parklands, Adelaide Oval, beaches",
+    funFact: "Adelaide is surrounded by a ring of parklands covering 1,760 acres! The city is the gateway to Barossa Valley wine region. Adelaide hosts more festivals per capita than any Australian city!",
+    funFactSource: "South Australia Tourism",
+    funFactSourceUrl: "https://southaustralia.com/"
+  },
+
+  {
+    id: 277,
+    name: "Tel Aviv",
+    continent: "Asia",
+    country: "Israel",
+    difficulty: "easy",
+    clues: [
+      "Israeli Mediterranean city known for tech and nightlife",
+      "Middle Eastern coastal city with Bauhaus architecture",
+      "Known as 'Start-up Nation' hub with beaches and markets",
+      "The Mediterranean Sea laps at this vibrant Israeli city",
+      "Israeli coastal city with White City Bauhaus buildings",
+      "Israel's tech hub and beach city on Mediterranean"
+    ],
+    waterFeature: "Mediterranean Sea",
+    population: "460,000 (4M metro)",
+    famousFor: "Beaches, start-ups, nightlife, Bauhaus architecture, markets",
+    funFact: "Tel Aviv has the highest number of start-ups per capita globally! The 'White City' has 4,000+ Bauhaus buildings - the world's largest collection. Tel Aviv was founded in 1909!",
+    funFactSource: "Visit Tel Aviv",
+    funFactSourceUrl: "https://www.visit-tel-aviv.com/"
+  },
+
+  {
+    id: 278,
+    name: "Kyoto",
+    continent: "Asia",
+    country: "Japan",
+    difficulty: "easy",
+    clues: [
+      "Japanese city with thousands of temples and geishas",
+      "Former imperial capital famous for cherry blossoms",
+      "Known for bamboo groves, golden pavilion, and tea houses",
+      "The Kamo River flows through this ancient cultural capital",
+      "Japanese city with Fushimi Inari shrine and Golden Pavilion",
+      "Japan's ancient capital with 2,000 temples and shrines"
+    ],
+    waterFeature: "Kamo River",
+    population: "1.5 million (2.8M metro)",
+    famousFor: "Fushimi Inari, Golden Pavilion, bamboo forest, geishas, temples",
+    funFact: "Kyoto has over 2,000 temples and shrines! The city was Japan's capital for 1,000 years until 1868. Fushimi Inari has 10,000+ red torii gates. The city has 17 UNESCO World Heritage sites!",
+    funFactSource: "Kyoto Tourism",
+    funFactSourceUrl: "https://www.kyoto.travel/"
+  },
+
+  {
+    id: 279,
+    name: "Gdansk",
+    continent: "Europe",
+    country: "Poland",
+    difficulty: "hard",
+    clues: [
+      "Polish Baltic port with amber and Solidarity movement",
+      "Northern European city with colorful merchant houses",
+      "Known for shipyards, Neptune Fountain, and Gothic architecture",
+      "The Baltic Sea and Motlawa River border this historic port",
+      "Polish port city where Solidarity movement began",
+      "Polish Baltic city famous for amber and shipyards"
+    ],
+    waterFeature: "Baltic Sea, Motlawa River",
+    population: "470,000 (1.2M metro)",
+    famousFor: "Solidarity movement, amber, shipyards, Long Market, Neptune Fountain",
+    funFact: "Gdansk is the amber capital of the world with 90% of the world's amber! The Solidarity trade union movement started here in 1980. The city was 90% destroyed in WWII and rebuilt!",
+    funFactSource: "Gdansk Tourism",
+    funFactSourceUrl: "https://www.visitgdansk.com/"
+  },
+
+  {
+    id: 280,
+    name: "Brussels",
+    continent: "Europe",
+    country: "Belgium",
+    difficulty: "easy",
+    clues: [
+      "European Union capital famous for waffles and chocolate",
+      "Belgian capital with Grand Place and Atomium",
+      "Known for EU headquarters, comic strips, and beer",
+      "This bilingual capital hosts European institutions",
+      "Belgian capital with Manneken Pis statue and Art Nouveau",
+      "Belgium and EU capital famous for chocolate and beer"
+    ],
+    waterFeature: "Senne River (covered)",
+    population: "1.2 million (2.1M metro)",
+    famousFor: "EU headquarters, Grand Place, Atomium, chocolate, waffles, beer",
+    funFact: "Brussels produces 220,000 tons of chocolate per year! The city is the de facto capital of the EU. The Manneken Pis statue has over 1,000 costumes. Brussels is the comic book capital!",
+    funFactSource: "Visit Brussels",
+    funFactSourceUrl: "https://visit.brussels/"
+  },
+
+  {
+    id: 281,
+    name: "Fes",
+    continent: "Africa",
+    country: "Morocco",
+    difficulty: "hard",
+    clues: [
+      "Moroccan medieval city with ancient tanneries",
+      "North African walled city with labyrinthine medina",
+      "Known for leather crafts, donkey transport, and oldest university",
+      "This Moroccan city has the world's largest car-free urban area",
+      "Moroccan imperial city with colorful tanneries",
+      "Moroccan city with Fes el-Bali medina and tanneries"
+    ],
+    waterFeature: "Oued Fes River",
+    population: "1.1 million (1.4M metro)",
+    famousFor: "Tanneries, Fes el-Bali medina, University of al-Qarawiyyin, leather crafts",
+    funFact: "Fes has the world's oldest continuously operating university - founded in 859 AD by a woman! The medina has 9,400 alleyways and is the world's largest car-free urban area. The Chouara Tannery has operated since the 11th century!",
+    funFactSource: "Morocco Tourism",
+    funFactSourceUrl: "https://www.visitmorocco.com/"
+  },
+
+  {
+    id: 282,
+    name: "Osaka",
+    continent: "Asia",
+    country: "Japan",
+    difficulty: "easy",
+    clues: [
+      "Japanese port city known as 'Nation's Kitchen'",
+      "Western Japanese city with neon streets and comedy",
+      "Known for street food, castle, and friendly locals",
+      "The Yodo River flows through this culinary Japanese city",
+      "Japanese city with Dotonbori district and Osaka Castle",
+      "Japan's kitchen city famous for takoyaki and okonomiyaki"
+    ],
+    waterFeature: "Yodo River, Osaka Bay",
+    population: "2.7 million (19M metro)",
+    famousFor: "Street food, Osaka Castle, Dotonbori, Universal Studios Japan",
+    funFact: "Osaka is called 'the Nation's Kitchen' for its incredible food scene! The city has the most Michelin-starred restaurants in Japan. Takoyaki (octopus balls) was invented here. The dialect is so distinct it's used in Japanese comedy!",
+    funFactSource: "Osaka Tourism",
+    funFactSourceUrl: "https://www.osaka-info.jp/"
+  },
+
+  {
+    id: 283,
+    name: "Bali (Denpasar)",
+    continent: "Asia",
+    country: "Indonesia",
+    difficulty: "easy",
+    clues: [
+      "Indonesian island known for beaches, temples, and rice terraces",
+      "Tropical paradise with Hindu culture and surf breaks",
+      "Known for Ubud, monkey forests, and spiritual retreats",
+      "The Indian Ocean surrounds this island of gods",
+      "Indonesian Hindu island with temples and rice paddies",
+      "Island paradise with Ubud, beaches, and Balinese culture"
+    ],
+    waterFeature: "Indian Ocean, Bali Sea",
+    population: "4.3 million (890K Denpasar)",
+    famousFor: "Beaches, temples, rice terraces, Ubud, surfing, yoga retreats",
+    funFact: "Bali is the only Hindu-majority region in Indonesia with 20,000+ temples! The island celebrates 'Nyepi' - a day of complete silence with no flights, cars, or lights. Bali has some of the world's best surfing!",
+    funFactSource: "Indonesia Tourism",
+    funFactSourceUrl: "https://www.indonesia.travel/"
+  },
+
+  {
+    id: 284,
+    name: "Stockholm",
+    continent: "Europe",
+    country: "Sweden",
+    difficulty: "easy",
+    clues: [
+      "Scandinavian capital built on 14 islands",
+      "Swedish capital with Nobel Prize and Abba Museum",
+      "Known for archipelago, design, and colorful buildings",
+      "Lake Mälaren and Baltic Sea surround this island capital",
+      "Swedish capital spread across islands and waterways",
+      "Sweden's beautiful capital built on islands"
+    ],
+    waterFeature: "Lake Mälaren, Baltic Sea, Stockholm Archipelago",
+    population: "980,000 (2.4M metro)",
+    famousFor: "Nobel Prize, Gamla Stan, Vasa Museum, archipelago, design",
+    funFact: "Stockholm is built on 14 islands connected by 57 bridges! The city has more museums per capita than any capital. Stockholm Archipelago has 30,000 islands. Stockholm is the birthplace of IKEA, Spotify, and H&M!",
+    funFactSource: "Visit Stockholm",
+    funFactSourceUrl: "https://www.visitstockholm.com/"
+  },
+
+  {
+    id: 285,
+    name: "Naples",
+    continent: "Europe",
+    country: "Italy",
+    difficulty: "medium",
+    clues: [
+      "Italian coastal city birthplace of pizza",
+      "Southern Italian port with Mount Vesuvius views",
+      "Known for pizza, archaeology, and chaotic energy",
+      "The Bay of Naples reflects this volcanic Italian city",
+      "Italian city shadowed by Mount Vesuvius with pizza heritage",
+      "Italian port city that invented pizza margherita"
+    ],
+    waterFeature: "Bay of Naples, Tyrrhenian Sea",
+    population: "960,000 (3.1M metro)",
+    famousFor: "Pizza, Mount Vesuvius, Pompeii, Naples Cathedral, chaos",
+    funFact: "Naples invented pizza margherita in 1889 for Queen Margherita! The city has the largest historic center in Europe. Mount Vesuvius last erupted in 1944 and destroyed Pompeii in 79 AD. Naples has 448 churches!",
+    funFactSource: "Naples Tourism",
+    funFactSourceUrl: "https://www.inaples.it/"
+  },
+
+  {
+    id: 286,
+    name: "Queenstown",
+    continent: "Oceania",
+    country: "New Zealand",
+    difficulty: "medium",
+    clues: [
+      "New Zealand adventure capital on a lake",
+      "South Island resort town with mountain views",
+      "Known for bungy jumping, skiing, and Lord of the Rings",
+      "Lake Wakatipu reflects the Remarkables mountains here",
+      "NZ adventure capital with bungy and Lord of the Rings sites",
+      "New Zealand lakeside town adventure capital"
+    ],
+    waterFeature: "Lake Wakatipu",
+    population: "16,000 (50K wider area)",
+    famousFor: "Bungy jumping, adventure sports, skiing, Lord of the Rings, Remarkables",
+    funFact: "Queenstown is the adventure capital of the world - birthplace of commercial bungy jumping! AJ Hackett opened the first bungy in 1988. The area was used extensively in Lord of the Rings films!",
+    funFactSource: "Queenstown Tourism",
+    funFactSourceUrl: "https://www.queenstownnz.co.nz/"
+  },
+
+  {
+    id: 287,
+    name: "Copenhagen",
+    continent: "Europe",
+    country: "Denmark",
+    difficulty: "easy",
+    clues: [
+      "Danish capital famous for bicycles and Little Mermaid",
+      "Scandinavian port city with colorful waterfront",
+      "Known for hygge, design, and sustainable living",
+      "The Øresund strait connects this capital to Sweden",
+      "Danish capital with Tivoli Gardens and Nyhavn harbor",
+      "Denmark's bicycle capital with Little Mermaid statue"
+    ],
+    waterFeature: "Øresund, Copenhagen Harbor",
+    population: "640,000 (1.3M metro)",
+    famousFor: "Little Mermaid, Nyhavn, Tivoli Gardens, bicycles, hygge, design",
+    funFact: "Copenhagen has more bicycles than people - 675,000 bikes! 62% of residents bike to work daily. The Little Mermaid statue is only 4 feet tall. Tivoli Gardens opened in 1843 and inspired Walt Disney!",
+    funFactSource: "Visit Copenhagen",
+    funFactSourceUrl: "https://www.visitcopenhagen.com/"
+  },
+
+  {
+    id: 288,
+    name: "Edinburgh",
+    continent: "Europe",
+    country: "Scotland",
+    difficulty: "easy",
+    clues: [
+      "Scottish capital with castle on volcanic rock",
+      "UK city famous for festivals and Harry Potter",
+      "Known for Royal Mile, whisky, and medieval streets",
+      "The Firth of Forth opens to the North Sea near this capital",
+      "Scottish capital with Edinburgh Castle and Royal Mile",
+      "Scotland's historic capital with castle and festivals"
+    ],
+    waterFeature: "Firth of Forth, North Sea",
+    population: "530,000 (900K metro)",
+    famousFor: "Edinburgh Castle, Royal Mile, festivals, whisky, Harry Potter connections",
+    funFact: "Edinburgh has more books per capita than any city! J.K. Rowling wrote Harry Potter in cafes here. Edinburgh Castle sits on an extinct volcano. The city hosts the world's largest arts festival!",
+    funFactSource: "Visit Scotland",
+    funFactSourceUrl: "https://www.visitscotland.com/"
+  },
+
+  {
+    id: 289,
+    name: "Petra (Wadi Musa)",
+    continent: "Asia",
+    country: "Jordan",
+    difficulty: "medium",
+    clues: [
+      "Jordanian ancient city carved into red cliffs",
+      "Rose-red rock city accessible through narrow canyon",
+      "Known as one of New 7 Wonders with Treasury facade",
+      "This ancient Nabataean capital is carved from sandstone",
+      "Jordanian archaeological site with Treasury carved in rock",
+      "Jordan's rose-red city carved by ancient Nabataeans"
+    ],
+    waterFeature: "Wadi Musa (Valley of Moses)",
+    population: "30,000 (nearby Wadi Musa town)",
+    famousFor: "Treasury (Al-Khazneh), rock-cut architecture, Siq canyon, Monastery",
+    funFact: "Petra was 'lost' to the Western world for 500 years until 1812! The Treasury facade appeared in Indiana Jones. The city was carved by Nabataeans 2,000 years ago. Petra has 800+ monuments carved from rose-red rock!",
+    funFactSource: "Jordan Tourism",
+    funFactSourceUrl: "https://www.visitjordan.com/"
+  },
+
+  {
+    id: 290,
+    name: "Munich",
+    continent: "Europe",
+    country: "Germany",
+    difficulty: "easy",
+    clues: [
+      "Bavarian capital famous for Oktoberfest",
+      "German city with beer halls and Alps nearby",
+      "Known for BMW, football, and traditional lederhosen",
+      "The Isar River flows through this beer-loving city",
+      "German city hosting world's largest beer festival",
+      "Bavaria's capital with Oktoberfest and beer gardens"
+    ],
+    waterFeature: "Isar River",
+    population: "1.5 million (3M metro)",
+    famousFor: "Oktoberfest, beer gardens, BMW, Marienplatz, Hofbräuhaus",
+    funFact: "Munich's Oktoberfest attracts 6 million visitors who drink 7 million liters of beer! The city has over 100 beer gardens. BMW headquarters is shaped like a 4-cylinder engine. Munich hosted the 1972 Olympics!",
+    funFactSource: "Munich Tourism",
+    funFactSourceUrl: "https://www.muenchen.de/"
+  },
+
+  {
+    id: 291,
+    name: "Santorini",
+    continent: "Europe",
+    country: "Greece",
+    difficulty: "medium",
+    clues: [
+      "Greek island with white buildings and blue domes",
+      "Volcanic Aegean island famous for sunsets",
+      "Known for cliffside villages, wine, and romance",
+      "The Aegean Sea surrounds this crescent-shaped volcanic island",
+      "Greek island with Oia sunset and caldera views",
+      "Greek volcanic island with iconic white and blue architecture"
+    ],
+    waterFeature: "Aegean Sea, volcanic caldera",
+    population: "15,000",
+    famousFor: "Oia sunset, white villages, blue domes, caldera, wine, romance",
+    funFact: "Santorini is actually a volcano that erupted 3,600 years ago creating the caldera! Some historians think it's the lost city of Atlantis. The island has 3 colors of beaches - red, white, and black volcanic sand!",
+    funFactSource: "Visit Greece",
+    funFactSourceUrl: "https://www.visitgreece.gr/"
+  },
+
+  {
+    id: 292,
+    name: "San Sebastian",
+    continent: "Europe",
+    country: "Spain",
+    difficulty: "hard",
+    clues: [
+      "Basque coastal city famous for pintxos and Michelin stars",
+      "Northern Spanish resort with crescent beach",
+      "Known for culinary excellence, film festival, and Belle Époque",
+      "La Concha Bay curves around this gastronomic capital",
+      "Spanish Basque city with most Michelin stars per capita",
+      "Basque beach city with pintxos culture and film festival"
+    ],
+    waterFeature: "Bay of Biscay, La Concha Bay",
+    population: "187,000 (440K metro)",
+    famousFor: "Pintxos, Michelin stars, La Concha beach, film festival, Old Town",
+    funFact: "San Sebastian has more Michelin stars per square meter than anywhere except Kyoto! The city has 3 three-Michelin-starred restaurants. La Concha beach is considered one of Europe's most beautiful!",
+    funFactSource: "San Sebastian Tourism",
+    funFactSourceUrl: "https://www.sansebastianturismo.com/"
+  },
+
+  {
+    id: 293,
+    name: "Savannah",
+    continent: "North America",
+    country: "United States",
+    difficulty: "medium",
+    clues: [
+      "Southern US city with oak trees and historic squares",
+      "Georgia port city with antebellum architecture",
+      "Known for Spanish moss, Southern charm, and haunted history",
+      "The Savannah River meets the Atlantic at this historic port",
+      "Georgia city with Forsyth Park and historic district",
+      "Southern US city with 22 historic squares and oak trees"
+    ],
+    waterFeature: "Savannah River, Atlantic Ocean",
+    population: "145,000 (390K metro)",
+    famousFor: "Historic squares, oak trees with Spanish moss, Forsyth Park, River Street",
+    funFact: "Savannah has 22 historic squares designed in the 1733 city plan! The city is one of America's most haunted with ghost tours nightly. Midnight in the Garden of Good and Evil made the city famous!",
+    funFactSource: "Visit Savannah",
+    funFactSourceUrl: "https://www.visitsavannah.com/"
+  },
+
+  {
+    id: 294,
+    name: "Riga",
+    continent: "Europe",
+    country: "Latvia",
+    difficulty: "hard",
+    clues: [
+      "Baltic capital with Art Nouveau architecture",
+      "Latvian port city on the Daugava River",
+      "Known for medieval Old Town and Central Market",
+      "The Baltic Sea is near this architectural gem",
+      "Latvian capital with Europe's finest Art Nouveau buildings",
+      "Baltic capital with House of Blackheads and Art Nouveau"
+    ],
+    waterFeature: "Daugava River, Baltic Sea, Gulf of Riga",
+    population: "630,000 (1M metro)",
+    famousFor: "Art Nouveau architecture, Old Town, Central Market, House of Blackheads",
+    funFact: "Riga has over 800 Art Nouveau buildings - the highest concentration in Europe! The Central Market is housed in 5 old Zeppelin hangars. The city's Christmas tree tradition started here in 1510!",
+    funFactSource: "Live Riga",
+    funFactSourceUrl: "https://www.liveriga.com/"
+  },
+
+  {
+    id: 295,
+    name: "Zanzibar City",
+    continent: "Africa",
+    country: "Tanzania",
+    difficulty: "hard",
+    clues: [
+      "Tanzanian island city with spice trade heritage",
+      "East African port with Arab and Swahili fusion",
+      "Known for Stone Town, beaches, and clove plantations",
+      "The Indian Ocean surrounds this spice island capital",
+      "Tanzanian island city with Stone Town UNESCO site",
+      "East African spice island with Arabic architecture"
+    ],
+    waterFeature: "Indian Ocean",
+    population: "220,000 (600K+ Unguja island)",
+    famousFor: "Stone Town, spice tours, beaches, doors, Freddie Mercury birthplace",
+    funFact: "Zanzibar supplied 90% of the world's cloves in the 19th century! Stone Town has over 1,700 ornately carved wooden doors. Freddie Mercury of Queen was born here in 1946!",
+    funFactSource: "Zanzibar Tourism",
+    funFactSourceUrl: "https://www.zanzibartourism.go.tz/"
+  },
+
+  {
+    id: 296,
+    name: "Strasbourg",
+    continent: "Europe",
+    country: "France",
+    difficulty: "hard",
+    clues: [
+      "French-German border city hosting EU Parliament",
+      "Alsatian capital with canals and half-timbered houses",
+      "Known for Christmas markets, cathedral, and tarte flambée",
+      "The Rhine and Ill rivers meet near this European capital",
+      "French city with EU Parliament and Grande Île",
+      "Alsace capital with famous Christmas market"
+    ],
+    waterFeature: "Ill River, Rhine River",
+    population: "280,000 (790K metro)",
+    famousFor: "EU Parliament, Christmas markets, cathedral, Petite France, canals",
+    funFact: "Strasbourg hosts the European Parliament and is a de facto EU capital! The city has the oldest Christmas market in Europe (since 1570). Strasbourg Cathedral was the world's tallest building for 227 years!",
+    funFactSource: "Strasbourg Tourism",
+    funFactSourceUrl: "https://www.strasbourg.eu/"
+  },
+
+  {
+    id: 297,
+    name: "Marrakech",
+    continent: "Africa",
+    country: "Morocco",
+    difficulty: "medium",
+    clues: [
+      "Moroccan imperial city near Atlas Mountains",
+      "Red-walled city with bustling souks and riads",
+      "Known for Jemaa el-Fnaa square and spice markets",
+      "This Moroccan 'Red City' is an oasis in the desert",
+      "Moroccan city with Koutoubia Mosque and Majorelle Garden",
+      "Morocco's Red City with souks and snake charmers"
+    ],
+    waterFeature: "Tensift River",
+    population: "1 million (1.3M metro)",
+    famousFor: "Jemaa el-Fnaa, souks, Koutoubia Mosque, riads, Majorelle Garden",
+    funFact: "Marrakech is called the 'Red City' because buildings must be painted red ochre by law! The city was founded in 1070 and has 19km of defensive walls. Majorelle Garden was owned by Yves Saint Laurent!",
+    funFactSource: "Morocco Tourism",
+    funFactSourceUrl: "https://www.visitmorocco.com/"
+  },
+
+  {
+    id: 298,
+    name: "Bucharest",
+    continent: "Europe",
+    country: "Romania",
+    difficulty: "medium",
+    clues: [
+      "Romanian capital known as 'Little Paris'",
+      "Eastern European city with grand boulevards and palace",
+      "Known for Parliament Palace, nightlife, and Soviet history",
+      "The Dâmbovița River flows through this Romanian capital",
+      "Romanian capital with world's heaviest building",
+      "Romania's capital with massive communist-era palace"
+    ],
+    waterFeature: "Dâmbovița River",
+    population: "1.8 million (2.3M metro)",
+    famousFor: "Parliament Palace, Old Town, nightlife, arc de triomphe",
+    funFact: "Bucharest's Parliament Palace is the world's heaviest building and second-largest administrative building after the Pentagon! The building has 1,100 rooms and used 1 million cubic meters of marble. Bucharest was called 'Little Paris' in the early 1900s!",
+    funFactSource: "Bucharest Tourism",
+    funFactSourceUrl: "https://bucharest.com/"
+  },
+
+  {
+    id: 299,
+    name: "Kyoto",
+    continent: "Asia",
+    country: "Japan",
+    difficulty: "easy",
+    clues: [
+      "Japanese city with 2,000 temples and shrines",
+      "Ancient imperial capital famous for geishas",
+      "Known for bamboo forest, golden temple, and cherry blossoms",
+      "The Kamo River flows through this cultural capital",
+      "Japanese city with Fushimi Inari's 10,000 gates",
+      "Japan's cultural heart with temples and tradition"
+    ],
+    waterFeature: "Kamo River",
+    population: "1.5 million (2.8M metro)",
+    famousFor: "Fushimi Inari, Golden Pavilion, Arashiyama bamboo, geishas",
+    funFact: "Kyoto has 2,000+ Buddhist temples and Shinto shrines! Fushimi Inari has 10,000 red torii gates donated over centuries. The city was Japan's capital for over 1,000 years. Kyoto was spared from WWII bombing to preserve its cultural treasures!",
+    funFactSource: "Kyoto Tourism",
+    funFactSourceUrl: "https://www.kyoto.travel/"
+  },
+
+  {
+    id: 300,
+    name: "Charleston",
+    continent: "North America",
+    country: "United States",
+    difficulty: "medium",
+    clues: [
+      "Southern US city with antebellum architecture and plantations",
+      "South Carolina port city with rainbow-colored houses",
+      "Known for historic district, beaches, and Southern cuisine",
+      "The Atlantic Ocean and Charleston Harbor border this historic city",
+      "South Carolina city with Rainbow Row and horse carriages",
+      "Southern coastal city with cobblestone streets and history"
+    ],
+    waterFeature: "Atlantic Ocean, Charleston Harbor, Ashley River, Cooper River",
+    population: "150,000 (800K metro)",
+    famousFor: "Rainbow Row, historic plantations, Battery promenade, Southern charm",
+    funFact: "Charleston has over 2,000 historic buildings and is called the 'Holy City' for its many church steeples! Rainbow Row features 13 colorful Georgian houses from the 1700s. The first shots of the Civil War were fired here at Fort Sumter in 1861!",
+    funFactSource: "Explore Charleston",
+    funFactSourceUrl: "https://www.explorecharleston.com/"
   }
 ];
 
