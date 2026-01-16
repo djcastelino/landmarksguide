@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 function LandmarkGrid({ landmarks, onLandmarkSelect, isLoading }) {
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedType, setSelectedType] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [showAllLandmarks, setShowAllLandmarks] = useState(false);
 
@@ -21,10 +22,11 @@ function LandmarkGrid({ landmarks, onLandmarkSelect, isLoading }) {
 
   const filteredLandmarks = landmarks.filter(landmark => {
     const matchesCategory = selectedCategory === 'All' || landmark.category === selectedCategory;
+    const matchesType = selectedType === 'All' || landmark.type === selectedType;
     const matchesSearch = landmark.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           landmark.country.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           landmark.city.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
+    return matchesCategory && matchesType && matchesSearch;
   });
 
   if (showAllLandmarks) {
@@ -38,9 +40,29 @@ function LandmarkGrid({ landmarks, onLandmarkSelect, isLoading }) {
           >
             <span>←</span> Back to Home
           </button>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Browse All Landmarks</h1>
-          <p className="text-gray-600">Explore 100 of the world's most iconic places</p>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">Explore the World</h1>
+          <p className="text-gray-600">Discover iconic landmarks and natural wonders</p>
         </div>
+
+      {/* Type Filter */}
+      <div className="mb-6 flex gap-3">
+        {['All', 'Man-made', 'Natural'].map(type => (
+          <button
+            key={type}
+            onClick={() => setSelectedType(type)}
+            className={`px-6 py-3 rounded-xl text-sm font-bold transition-all ${
+              selectedType === type
+                ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg scale-105'
+                : 'bg-white text-gray-700 border-2 border-gray-200 hover:border-purple-300 hover:bg-purple-50'
+            }`}
+          >
+            {type === 'Man-made' && '🏛️ '}
+            {type === 'Natural' && '🏔️ '}
+            {type === 'All' && '🌍 '}
+            {type}
+          </button>
+        ))}
+      </div>
 
       <div className="mb-6">
         <input
@@ -69,7 +91,7 @@ function LandmarkGrid({ landmarks, onLandmarkSelect, isLoading }) {
       </div>
 
       <div className="mb-4 text-sm text-gray-600">
-        Showing {filteredLandmarks.length} landmark{filteredLandmarks.length !== 1 ? 's' : ''}
+        Showing {filteredLandmarks.length} {selectedType === 'Natural' ? 'natural wonder' : selectedType === 'Man-made' ? 'landmark' : 'place'}{filteredLandmarks.length !== 1 ? 's' : ''}
       </div>
 
       {isLoading ? (
@@ -96,6 +118,16 @@ function LandmarkGrid({ landmarks, onLandmarkSelect, isLoading }) {
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                
+                <div className="absolute top-3 left-3">
+                  <span className={`px-3 py-1 backdrop-blur-sm text-xs font-bold rounded-full ${
+                    landmark.type === 'Natural' 
+                      ? 'bg-green-500/90 text-white' 
+                      : 'bg-blue-500/90 text-white'
+                  }`}>
+                    {landmark.type === 'Natural' ? '🏔️ Natural' : '🏛️ Man-made'}
+                  </span>
+                </div>
                 
                 <div className="absolute top-3 right-3">
                   <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-xs font-semibold rounded-full text-gray-800">
@@ -168,6 +200,16 @@ function LandmarkGrid({ landmarks, onLandmarkSelect, isLoading }) {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
             
+            <div className="absolute top-6 left-6">
+              <span className={`px-4 py-2 backdrop-blur-sm text-sm font-bold rounded-full shadow-lg ${
+                featuredLandmark.type === 'Natural' 
+                  ? 'bg-green-500/90 text-white' 
+                  : 'bg-blue-500/90 text-white'
+              }`}>
+                {featuredLandmark.type === 'Natural' ? '🏔️ Natural Wonder' : '🏛️ Landmark'}
+              </span>
+            </div>
+            
             <div className="absolute top-6 right-6">
               <span className="px-4 py-2 bg-white text-purple-600 text-sm font-bold rounded-full shadow-lg">
                 {featuredLandmark.category}
@@ -211,6 +253,16 @@ function LandmarkGrid({ landmarks, onLandmarkSelect, isLoading }) {
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                
+                <div className="absolute top-3 left-3">
+                  <span className={`px-2 py-1 backdrop-blur-sm text-xs font-bold rounded-full ${
+                    landmark.type === 'Natural' 
+                      ? 'bg-green-500/90 text-white' 
+                      : 'bg-blue-500/90 text-white'
+                  }`}>
+                    {landmark.type === 'Natural' ? '🏔️' : '🏛️'}
+                  </span>
+                </div>
                 
                 <div className="absolute bottom-0 left-0 right-0 p-4">
                   <h3 className="text-white text-xl font-bold mb-1 drop-shadow-lg">
