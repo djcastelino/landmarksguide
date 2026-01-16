@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 const TripPlanner = ({ landmarks }) => {
+  const [activeTab, setActiveTab] = useState('itinerary'); // 'itinerary' or 'route'
   const [tripView, setTripView] = useState('form');
   const [destination, setDestination] = useState('');
   const [startDate, setStartDate] = useState('');
@@ -8,6 +9,11 @@ const TripPlanner = ({ landmarks }) => {
   const [selectedInterests, setSelectedInterests] = useState([]);
   const [tripData, setTripData] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  
+  // Route Planner state
+  const [routeQuery, setRouteQuery] = useState('');
+  const [routeResponse, setRouteResponse] = useState(null);
+  const [isGeneratingRoute, setIsGeneratingRoute] = useState(false);
 
   const interestCategories = [
     { id: 'culture', name: 'Culture & History', emoji: '🏛️' },
@@ -79,6 +85,44 @@ const TripPlanner = ({ landmarks }) => {
   const handleBackToForm = () => {
     setTripView('form');
     setTripData(null);
+  };
+
+  const handleGenerateRoute = async () => {
+    if (!routeQuery.trim()) {
+      alert('Please enter your travel question');
+      return;
+    }
+
+    setIsGeneratingRoute(true);
+
+    try {
+      const response = await fetch('https://workflowly.online/webhook/generate-route', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: routeQuery
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to generate route plan');
+      }
+
+      const data = await response.json();
+      setRouteResponse(data);
+    } catch (error) {
+      console.error('Error generating route:', error);
+      alert('Failed to generate route plan. Please try again.');
+    } finally {
+      setIsGeneratingRoute(false);
+    }
+  };
+
+  const handleResetRoute = () => {
+    setRouteQuery('');
+    setRouteResponse(null);
   };
 
   if (tripView === 'generating') {
@@ -233,11 +277,37 @@ const TripPlanner = ({ landmarks }) => {
       <div className="text-center mb-10">
         <div className="text-5xl mb-4">✈️</div>
         <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
-          TripCraft AI
+          Plan Your Trip
         </h1>
-        <p className="text-xl text-gray-600">Create your perfect trip in seconds with AI</p>
+        <p className="text-xl text-gray-600">AI-powered travel planning & route recommendations</p>
       </div>
 
+      {/* Tab Navigation */}
+      <div className="flex gap-4 mb-8 bg-white rounded-2xl p-2 shadow-lg">
+        <button
+          onClick={() => setActiveTab('itinerary')}
+          className={`flex-1 py-4 px-6 rounded-xl font-bold text-lg transition-all ${
+            activeTab === 'itinerary'
+              ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg'
+              : 'text-gray-600 hover:bg-gray-50'
+          }`}
+        >
+          🗓️ Quick Itinerary
+        </button>
+        <button
+          onClick={() => setActiveTab('route')}
+          className={`flex-1 py-4 px-6 rounded-xl font-bold text-lg transition-all ${
+            activeTab === 'route'
+              ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg'
+              : 'text-gray-600 hover:bg-gray-50'
+          }`}
+        >
+          🗺️ Route Planner
+        </button>
+      </div>
+
+      {/* Quick Itinerary Tab */}
+      {activeTab === 'itinerary' && (
       <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-10">
         <div className="mb-8">
           <label className="flex items-center gap-2 text-lg font-bold mb-3">
@@ -321,6 +391,92 @@ const TripPlanner = ({ landmarks }) => {
           </p>
         )}
       </div>
+      )}
+
+      {/* Route Planner Tab */}
+      {activeTab === 'route' && (
+        <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-10">
+          {!routeResponse ? (
+            <>
+              <div className="mb-8">
+                <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                  <span>🧭</span>
+                  Ask Your Travel Question
+                </h2>
+                <p className="text-gray-600 mb-6">
+                  Get smart route recommendations, transportation advice, and scenic stops for your multi-city journey.
+                </p>
+                
+                <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
+                  <p className="text-sm text-gray-700 font-semibold mb-2">💡 Example questions:</p>
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    <li>• "I have 6 days in Ireland west coast, can I make it to London for 2-3 days?"</li>
+                    <li>• "Best way to get from Rome to Amalfi Coast? Worth stopping anywhere?"</li>
+                    <li>• "Planning 10 days across Italy - Rome, Florence, Venice. Best route?"</li>
+                  </ul>
+                </div>
+
+                <textarea
+                  value={routeQuery}
+                  onChange={(e) => setRouteQuery(e.target.value)}
+                  placeholder="Type your travel question here... e.g., 'I have 5 days in Scotland, what's the best route from Edinburgh to the Highlands?'"
+                  rows={6}
+                  className="w-full px-6 py-4 border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none resize-none text-lg"
+                  disabled={isGeneratingRoute}
+                />
+              </div>
+
+              <button
+                onClick={handleGenerateRoute}
+                disabled={!routeQuery.trim() || isGeneratingRoute}
+                className="w-full bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 hover:from-purple-700 hover:via-pink-600 hover:to-red-600 disabled:from-gray-300 disabled:to-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 sm:py-5 px-8 rounded-xl text-lg sm:text-xl flex items-center justify-center gap-3"
+              >
+                {isGeneratingRoute ? (
+                  <>
+                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+                    <span>Analyzing your route...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>🚀</span>
+                    <span>Get Route Recommendations</span>
+                  </>
+                )}
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                onClick={handleResetRoute}
+                className="mb-6 flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                <span className="text-xl">←</span>
+                <span className="font-medium">Ask Another Question</span>
+              </button>
+
+              <div className="bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 rounded-2xl p-6 sm:p-8 text-white mb-6 shadow-xl">
+                <h2 className="text-2xl sm:text-3xl font-bold mb-3">Your Route Plan</h2>
+                <p className="text-lg opacity-90 italic">"{routeQuery}"</p>
+              </div>
+
+              <div className="prose prose-lg max-w-none">
+                <div className="bg-white rounded-xl p-6 whitespace-pre-wrap text-gray-800 leading-relaxed">
+                  {routeResponse.response || routeResponse.plan || JSON.stringify(routeResponse, null, 2)}
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4 mt-6">
+                <button className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-4 px-6 rounded-xl transition-all shadow-lg">
+                  💾 Save Route
+                </button>
+                <button className="flex-1 bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 text-white font-bold py-4 px-6 rounded-xl transition-all shadow-lg">
+                  📤 Share Route
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 };
