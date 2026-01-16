@@ -9,8 +9,8 @@ export default function Header({ showBack, onBack }) {
             <Landmark className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-gray-900">Monument</h1>
-            <p className="text-xs text-gray-500">AI-Powered Landmark Discovery</p>
+            <h1 className="text-xl font-bold text-gray-900">Geonauts Guide</h1>
+            <p className="text-xs text-gray-500">Explore the World, One Wonder at a Time</p>
           </div>
         </div>
         
