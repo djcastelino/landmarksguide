@@ -710,7 +710,7 @@ const CityGuess = () => {
                     <div className="text-sm text-gray-600 mb-2">
                       {yesterday.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}
                     </div>
-                    <div className="text-2xl font-bold text-purple-900 mb-1">{city.name}</div>
+                    <div className="text-2xl font-bold text-purple-900 mb-1">🌍 Yesterday's City</div>
                     <div className="text-sm text-gray-500 capitalize">{city.difficulty} difficulty</div>
                   </button>
                 );

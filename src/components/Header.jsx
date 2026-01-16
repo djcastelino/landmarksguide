@@ -10,7 +10,7 @@ export default function Header({ showBack, onBack }) {
           </div>
           <div>
             <h1 className="text-xl font-bold text-gray-900">Geonauts Guide</h1>
-            <p className="text-xs text-gray-500">Explore the World, One Wonder at a Time</p>
+            <p className="text-xs text-gray-500">Your AI Travel Companion for Discovery & Adventure</p>
           </div>
         </div>
         

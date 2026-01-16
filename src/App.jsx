@@ -107,7 +107,7 @@ function App() {
                       : 'bg-white text-gray-700 border-2 border-gray-200 hover:border-purple-300 hover:bg-purple-50'
                   }`}
                 >
-                  📱 Grid
+                  🏛️ Explore
                 </button>
                 <button
                   onClick={() => toggleViewMode('map')}
