@@ -143,6 +143,13 @@ const CityGuess = () => {
     setGameState('playing');
     setAttemptsRemaining(6);
     setShowArchive(false);
+    
+    // Clear cached audio so it generates fresh for archived city
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+    }
+    setIsPlayingAudio(false);
   };
 
   const handlePlayFunFact = async () => {
@@ -211,6 +218,13 @@ const CityGuess = () => {
     setIsArchiveMode(false);
     const city = getDailyCity();
     setDailyCity(city);
+    
+    // Clear cached audio
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+    }
+    setIsPlayingAudio(false);
     
     // Reload today's saved game
     const today = new Date().toDateString();
